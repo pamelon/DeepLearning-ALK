@@ -8,11 +8,16 @@ Classes are condected onsite at Koźmiński. All classes are mandatory, one abse
 
 Class dates are as follows: 
 
-20.04 15:45 - 19:00
-28.04 15:45 - 19:00
-5.05 15:45 - 19:00
-12.05 15:45 - 19:00
-19.05 15:45 - 19:00
+| Date         | Time          | Subject                       |
+|--------------|---------------|-------------------------------|
+| 20.04 (Wed)  | 15:45 - 19:00 |  Neural Networks Introduction |
+| 28.04 (Th)   | 15:45 - 19:00 |  BERT and GPT-3 - DL in NLP   |
+| 05.05 (Th)   | 15:45 - 19:00 |  Convolution - DL in VIsion   |
+| 12.05 (Th)   | 15:45 - 19:00 |  DL in Cloud, GPU             |
+| 19.05 (Th)   | 15:45 - 19:00 |  Project result presentations |
+
+We will be working on the given subject and learn each day until 18:00. 
+18:00 - 19:00 will be time for project questions, quandries and consultations. 
 
 ## Grading 
 
