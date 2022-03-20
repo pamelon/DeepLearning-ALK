@@ -6,7 +6,7 @@ Repository with materials for 2021/22 Deep Learning course at Koźmiński Univer
 
 Classes are condected onsite at Koźmiński. All classes are mandatory, one absence is allowed. As always yet, **the class is for you, not for me**. If you signed up I hope you're interested in the content.
 
-Class dates are as follows: 
+Class dates and contents are as follows: 
 
 | Date         | Time          | Subject                       |
 |--------------|---------------|-------------------------------|
@@ -32,6 +32,8 @@ We are here to learn and please:
 - Be empathetic
 - Listen to others
 - Be on time
+
+[](img/dll-basic-cute.png)
 
 
 
