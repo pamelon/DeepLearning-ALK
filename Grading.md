@@ -32,6 +32,21 @@ The project is done in pairs. Please choose someone with a similar ML/DL experie
 - This is a tabular dataset consisnting of distinct measurements of weather conditions with summaries written in plain text.
 - **Goal**: Train a DL model to predict temperature for the next day, based on three day window. Model gets data from last three days - outputs the predited temperature for the next day. As you can guess, uou cannot use apparent_temperature column anywhere in your predictions (Regression)
 
+In the project your main objective is to learn. You can use any framework you like. 
+Pure Tensorflow, Keras, PyTorch. If you are into it you can always build your own neural net from scratch (I'm not commiting to debugging it though)!
+
+## Results
+
+The results I am expecting at the end of your projects, regardless of the project dataset is:
+- Data exploration and conclusions from that process (What you found? How that influenced your netork architecture?)
+- Feature engineering and reasons for it (Why you decided to choose such features? How your results were based on features?)
+- What was your network architecture?
+- What framework and methods did you use? Why?
+- What issues you had? What problems you found while dealing with the dataset?
+
+This all needs to be included in the frinal presentation on 19.05
+Remember that the presentations are made by each team **for your collegues**. Show what you have learned so that we all can leave this class knowing a bit more ☺️
+
 
 
 
