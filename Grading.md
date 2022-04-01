@@ -1,6 +1,12 @@
 # Grading and project
 
-Grading is based on a project alone. The grading scheme is as follows:
+During the subject you can gather 100 points. 
+
+Grading is based on two factors: 
+1. Engagement and participation in classes - 20 points
+2. Project - 80 points
+
+100 points make 100%, grades are as follows:
 
 ```
 <51; 60) % 3

@@ -8,8 +8,8 @@ Classes are condected onsite at Koźmiński. All classes are mandatory, one abse
 
 Class dates and contents are as follows: 
 
-| Date         | Time          | Subject                       |
-|--------------|---------------|-------------------------------|
+| Date         | Time          | Subject                       | Materials |
+|--------------|---------------|-------------------------------|-----------|
 | 20.04 (Wed)  | 15:45 - 19:00 |  Neural Networks Introduction |
 | 28.04 (Th)   | 15:45 - 19:00 |  BERT and GPT-3 - DL in NLP   |
 | 05.05 (Th)   | 15:45 - 19:00 |  Convolution - DL in VIsion   |
@@ -19,6 +19,8 @@ Class dates and contents are as follows:
 We will be working on the given subject and learn each day until 18:00. 
 18:00 - 19:00 will be time for project questions, quandries and consultations. 
 
+Materials used during classes will be shared in this repository in the coresponding folders. 
+
 ## Grading 
 
 All the information about course grading and the project for course completion is [here](Grading.md). 
@@ -26,12 +28,12 @@ All the information about course grading and the project for course completion i
 ## Code of Conduct 
 
 We are here to learn and please:
-- Don't be afraid to ask questions
+- Don't be afraid to ask questions❔
 - Tell me if I'm telling things that are too obvious or too complicated
 - Tell me if you have any recommendations for how the class is conducted
-- Be empathetic
+- Be empathetic ❤️
 - Listen to others
-- Be on time
+- Be on time ⌛
 
 ![](img/dll-basic-cute.png)
 
