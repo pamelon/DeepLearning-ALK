@@ -20,7 +20,7 @@ Source: https://www.manning.com/books/deep-learning-with-python
 
 How it's going:
 
-<img src="DlaML.jpg" alt="Deep Learning and Machine Leatning" style="width:200px;"/>
+<img src="img/DlaML.jpg" alt="Deep Learning and Machine Leatning" style="width:200px;"/>
 Source: https://www.manning.com/books/deep-learning-with-python
 
 
