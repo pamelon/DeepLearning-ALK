@@ -15,12 +15,12 @@ Tell me what you know about DL so the class can bring you more value: https://fo
 
 How it started:
 
-![](img/ml-programming.png)
+![](img/ml-programming.png)  
 Source: https://www.manning.com/books/deep-learning-with-python
 
 How it's going:
 
-![](img/DLaML.jpg)
+![](img/DLaML.jpg)  
 Source: https://www.manning.com/books/deep-learning-with-python
 
 
