@@ -39,6 +39,9 @@ Multi layared perceptron:
 Backpropagation: https://towardsdatascience.com/understanding-backpropagation-algorithm-7bb3aa2f95fd  
 Visual Intro to Neural Nets: https://www.youtube.com/watch?v=aircAruvnKk&list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi
 
+Loss functions: https://www.theaidream.com/post/loss-functions-in-neural-networks  
+Activation functions: https://www.mygreatlearning.com/blog/activation-functions/  
+
 ![](img/dnn.png)  
 
 Looking under(ish) the hood:   
@@ -50,10 +53,14 @@ Deep Learning in a few diagrams:
 
 ![](img/weights-representation.png)  
 
+Which is:  
+
 ![](img/weights-representation2.png)  
 
-![](img/weights-representation3.png)  s
-Source: https://www.manning.com/books/deep-learning-with-python 
+Which then is:  
+
+![](img/weights-representation3.png)  
+Source: https://www.manning.com/books/deep-learning-with-python  
 
 And what about the brain?
 
