@@ -35,7 +35,7 @@ Multi layared perceptron:
 
 ![](img/perceptron-multil.png)
 
-Backpropagation: https://towardsdatascience.com/understanding-backpropagation-algorithm-7bb3aa2f95fd
+Backpropagation: https://towardsdatascience.com/understanding-backpropagation-algorithm-7bb3aa2f95fd  
 Visual Intro to Neural Nets: https://www.youtube.com/watch?v=aircAruvnKk&list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi
 
 ![](img/dnn.png)  
@@ -43,10 +43,11 @@ Visual Intro to Neural Nets: https://www.youtube.com/watch?v=aircAruvnKk&list=PL
 Looking under(ish) the hood:   
 
 ![](img/dnn-deeper.png)
+Source: https://www.manning.com/books/deep-learning-with-python
 
 And what about the brain?
 
-![](https://i0.wp.com/www.neurobureau.org/wp-content/uploads/2013/03/33.jpg)
+<img src="https://i0.wp.com/www.neurobureau.org/wp-content/uploads/2013/03/33.jpg" alt="Brains brains brains" style="width:500px;"/>
 
 
 
