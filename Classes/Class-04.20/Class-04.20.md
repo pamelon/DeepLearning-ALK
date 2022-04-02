@@ -21,7 +21,7 @@ Source: https://www.manning.com/books/deep-learning-with-python
 How it's going:
 
 <img src="img/DLaML.jpg" alt="Deep Learning and Machine Leatning" style="width:500px;"/>
-Source: https://learning.oreilly.com/library/view/efficient-deep-learning/9781098117405/
+Source: https://learning.oreilly.com/library/view/efficient-deep-learning/9781098117405/  
 
 In the field of machine learning, deep learning, that is, learning with the help of multi-layer networks
 of neurons is the fastest growing, and by many also considered the most important, method of all
@@ -43,11 +43,11 @@ Visual Intro to Neural Nets: https://www.youtube.com/watch?v=aircAruvnKk&list=PL
 Looking under(ish) the hood:   
 
 ![](img/dnn-deeper.png)
-Source: https://www.manning.com/books/deep-learning-with-python
+Source: https://www.manning.com/books/deep-learning-with-python  
 
 And what about the brain?
 
-<img src="https://i0.wp.com/www.neurobureau.org/wp-content/uploads/2013/03/33.jpg" alt="Brains brains brains" style="width:500px;"/>
+<img src="img/brains.jpg" alt="Brains brains brains" style="width:600px;"/>
 
 
 
