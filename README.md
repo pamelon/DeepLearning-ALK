@@ -21,6 +21,8 @@ We will be working on the given subject and learn each day until 18:00.
 
 Materials used during classes will be shared in this repository in the coresponding folders. 
 
+The environment set up for what we are starting with is explained here: https://www.tutorialspoint.com/keras/keras_installation.htm. We'll be using python virtual environments and will have some time for set up and questions during our first class.
+
 ## Grading 
 
 All the information about course grading and the project for course completion is [here](Grading.md). 
