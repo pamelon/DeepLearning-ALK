@@ -66,6 +66,9 @@ And what about the brain?
 
 <img src="img/brains.jpg" alt="Brains brains brains" style="width:600px;"/>
 
+<img src="img/neuron.jpg" alt="Simplified Neuron" style="width:600px;"/>
+Source: https://en.wikipedia.org/wiki/Neuron  
+
 
 
 
