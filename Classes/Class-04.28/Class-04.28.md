@@ -93,6 +93,8 @@ Fun-facts:
 
 If you want to dig deeper and see how to use BERT, I am redirecting yoi here: https://github.com/jalammar/jalammar.github.io/blob/master/notebooks/bert/A_Visual_Notebook_to_Using_BERT_for_the_First_Time.ipynb?msclkid=f0d906e3c6c511ec810feae29c10290c
 
+Easy and less-easy (for eager heads) explanation of BERT: https://www.youtube.com/watch?v=xI0HHN5XKDo 
+
 
 
 
