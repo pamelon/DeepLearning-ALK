@@ -25,6 +25,7 @@ What types of problems do we solve:
 2. What is this text about?
 3. How can i summarize this text?
 4. Is that text appropriate?
+5. How do I say that in french?
 
 And more broadly:  
 1. How can i answer this question?
@@ -35,6 +36,7 @@ And more broadly:
 # How do we deal with words
 
 ![](img/language-processing.png)  
+Source: https://www.manning.com/books/deep-learning-with-python 
 
 ![](img/ngrams.png)  
 
@@ -46,6 +48,43 @@ Lets remember that networks (and any model to be fair) work on representations. 
 
 ![](img/stopwords.png)
 
+# BERT
+
+What is a model? It's a problem representation. In this case - a language representation.  
+
+![](img/lstm.jpg)
+
+LSTMs are:
+1. Slow to train
+2. Rather unidirectional
+3. No deep context perspective
+4. No task separation
+
+![](img/transformer.jpg)
+
+Well, the actual transformer:  
+
+![](img/transformer-nn.jpg)
+
+![](img/trans-rnn.jpg)
+
+BERT:
+1. aim to predict the relationships between sentences by analyzing them holistically, as well as token-level tasks such as named entity recognition and question answering.
+2. is designed to pretrain deep bidirectional representations from unlabeled text by jointly conditioning on both
+left and right context in all layers. 
+3. can create state-of-the-art models for a wide range of tasks, such as question answering,
+language inference and translation.
+
+Source: https://aclanthology.org/N19-1423.pdf [BERT: Pre-training of Deep Bidirectional Transformers for
+Language Understanding]  
+
+![](img/tokens-bert.jpg)
+
+![](img/bert-steps.jpg)
+Source: https://aclanthology.org/N19-1423.pdf [BERT: Pre-training of Deep Bidirectional Transformers for
+Language Understanding]  
+
+On SQuAD: https://rajpurkar.github.io/SQuAD-explorer/?msclkid=2b188d20c6c111ec90a8707c579811f9  
 
 
 
