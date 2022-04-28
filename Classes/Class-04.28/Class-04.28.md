@@ -78,13 +78,20 @@ language inference and translation.
 Source: https://aclanthology.org/N19-1423.pdf [BERT: Pre-training of Deep Bidirectional Transformers for
 Language Understanding]  
 
-![](img/tokens-bert.jpg)
+![](img/tokens-bert.png)
 
 ![](img/bert-steps.jpg)
 Source: https://aclanthology.org/N19-1423.pdf [BERT: Pre-training of Deep Bidirectional Transformers for
 Language Understanding]  
 
 On SQuAD: https://rajpurkar.github.io/SQuAD-explorer/?msclkid=2b188d20c6c111ec90a8707c579811f9  
+
+Fun-facts:
+1. BERT_BASE contains 110M parameters and BERT_LARGE contains 340M parameters
+2. BERT is a 2018 child of Google Researchers
+3. Pretraining is a KEY element of BERT - we are separating understanding language from a given task
+
+If you want to dig deeper and see how to use BERT, I am redirecting yoi here: https://github.com/jalammar/jalammar.github.io/blob/master/notebooks/bert/A_Visual_Notebook_to_Using_BERT_for_the_First_Time.ipynb?msclkid=f0d906e3c6c511ec810feae29c10290c
 
 
 
