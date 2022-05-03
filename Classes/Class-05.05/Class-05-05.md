@@ -41,4 +41,6 @@ Deep dive into AlexNet: https://www.youtube.com/watch?v=7LQSdPjWjdA
 
 # So what is this convolution?
 
+![](img/parts-of-cat.png)
+
 ![](img/convolution.gif)
