@@ -36,11 +36,16 @@ Getting back to the ImageNet:
 In 2012 Alex Krivshevsky with his team designed a network that declassified the competition. The network achieved an error of 15.3%, around 11 percentage points lower than that next best one. This is crazy for ML standards, as you are probably aware. 
 
 ![](img/alexnet.jpg)
+<img src="img/alexnet.jpg" alt="AlexNet" style="width:800px;"/>
 
 Deep dive into AlexNet: https://www.youtube.com/watch?v=7LQSdPjWjdA  
 
 # So what is this convolution?
 
-![](img/parts-of-cat.png)
+<img src="img/parts-of-cat.png" alt="Parts of a cat" style="width:700px;"/>
 
 ![](img/convolution.gif)
+
+![](img/filter-conv.png)
+
+# And now into MaxPooling
