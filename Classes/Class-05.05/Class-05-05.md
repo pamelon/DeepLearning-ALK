@@ -35,10 +35,10 @@ Getting back to the ImageNet:
 
 In 2012 Alex Krivshevsky with his team designed a network that declassified the competition. The network achieved an error of 15.3%, around 11 percentage points lower than that next best one. This is crazy for ML standards, as you are probably aware. 
 
-![](img/alexnet.jpg)
 <img src="img/alexnet.jpg" alt="AlexNet" style="width:800px;"/>
 
 Deep dive into AlexNet: https://www.youtube.com/watch?v=7LQSdPjWjdA  
+The AlexNet code example: https://github.com/krishnaik06/Advanced-CNN-Architectures/blob/master/Transfer%20Learning%20Alexnet.ipynb  
 
 # So what is this convolution?
 
@@ -48,4 +48,30 @@ Deep dive into AlexNet: https://www.youtube.com/watch?v=7LQSdPjWjdA
 
 ![](img/filter-conv.png)
 
+And padding?  
+
 # And now into MaxPooling
+
+In short - downsampling  
+For:
+1. Efficiency of processing
+2. Efficiency of memory
+3. Keeping the most important parts of each section
+
+![](img/maxpool.gif)
+
+![](img/maxpooling-example.jpg)
+
+Now back to AlexNet!  
+
+What did AlexNet do that made it so revolutionary? 
+1. Data augmentation
+
+![](img/augmentation.png)
+
+2. Dropout
+
+![](img/dropout.png)
+
+3. ReLU
+4. ...
