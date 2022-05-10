@@ -29,6 +29,7 @@ But for us, users - this is a transparent layer. We just need an object to do so
 So what is this CPU?
 
 ![](img/cpu.png)  
+More on how CPUs work here: https://www.youtube.com/watch?v=cNN_tTXABUA  
 
 CPU is a single pair of hands:
  
@@ -39,19 +40,22 @@ But what if we need multiple pairs of hands?
 <img src="img/gpu-hands.jpg" alt="GPU as hands" style="width:900px;"/>
 
 ![](img/gpu.png)  
+More on how GPUs work here: https://www.youtube.com/watch?v=SrAMBi_8tIk
+Even more on GPUs: https://www.youtube.com/watch?v=LfdK-v0SbGI 
 
 Parralelism is the core of GPU. We have a lot of hands but these are smaller and less complex hands. Actually GPU cannot do anything that CPU cannot do. CPU just does it (usually) slower.
 
 What GPU is good for (and why?):
 1. Image rendering (in real time)
-2. Deep Learning
+2. Deep Learning (https://www.youtube.com/watch?v=GRRMi7UfZHg & https://www.youtube.com/watch?v=EKD1kEMNeeU) 
 3. Data mining
 4. Cryptocurrency mining
 5. Gaming
 
 # CUDA 
 
-![](img/nvidia.jpg)  
+![](img/nvidia.jpg) 
+CUDA intro (with GPU explanation) in 6 episodes: https://www.youtube.com/watch?v=4APkMJdiudU&list=PLC6u37oFvF40BAm7gwVP7uDdzmW83yHPe 
 
 Example is in /code folder for you to [have a peek](code/cuda-example.cu).  
 And if you have a GPU - give it a spin!
@@ -63,3 +67,32 @@ So how big should my rented apartment be to fit in all the cores?
 That's why:  
 
 <img src="img/cloud-computing.jpg" alt="Cloud Computing sign" style="width:900px;"/>
+
+# Cloud in general and Azure in particular
+
+Azure for students: https://azure.microsoft.com/en-us/free/students/  
+
+![](img/cloud-services.png)  
+
+Google Colab: https://colab.research.google.com/  
+Only 1 core
+
+Kaggle: https://www.kaggle.com/code/dansbecker/running-kaggle-kernels-with-a-gpu/notebook  
+Only 2 cores
+
+More on options: https://blog.paperspace.com/gradient-kaggle-notebook-comparison/#:~:text=Kaggle%3A%20GPU%3A%20TESLA%20P100%20with%202%20CPU%20cores,with%204%20CPU%20cores%20and%2016%20GB%20RAM  
+
+Okey so now Azure!  
+
+Services for ML and DL:
+
+![](img/azure-ml.jpeg)
+
+![](img/databricks-logo.jpg)  
+
+Services using DL (how and why):
+
+![](img/cs.jpg)
+
+
+
