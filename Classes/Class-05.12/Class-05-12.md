@@ -61,7 +61,7 @@ More on CPU, GPU, TPU: https://www.youtube.com/watch?v=6ZDoFomU10A
 
 # CUDA 
 
-![](img/nvidia.jpg) 
+![](img/nvidia.jpg)   
 CUDA intro (with GPU explanation) in 6 episodes: https://www.youtube.com/watch?v=4APkMJdiudU&list=PLC6u37oFvF40BAm7gwVP7uDdzmW83yHPe 
 
 Example is in /code folder for you to [have a peek](code/cuda-example.cu).  
