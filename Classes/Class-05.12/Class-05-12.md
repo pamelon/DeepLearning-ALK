@@ -45,12 +45,19 @@ Even more on GPUs: https://www.youtube.com/watch?v=LfdK-v0SbGI
 
 Parralelism is the core of GPU. We have a lot of hands but these are smaller and less complex hands. Actually GPU cannot do anything that CPU cannot do. CPU just does it (usually) slower.
 
+![](img/cpu-gpu.png)  
+
 What GPU is good for (and why?):
 1. Image rendering (in real time)
 2. Deep Learning (https://www.youtube.com/watch?v=GRRMi7UfZHg & https://www.youtube.com/watch?v=EKD1kEMNeeU) 
 3. Data mining
 4. Cryptocurrency mining
 5. Gaming
+
+TPU - matrix processor, specifical for DL. Very fast matrix computation. No need for memory access.  
+
+IPU: https://www.graphcore.ai/ & https://www.eejournal.com/article/20170119-ipu/  
+More on CPU, GPU, TPU: https://www.youtube.com/watch?v=6ZDoFomU10A  
 
 # CUDA 
 
