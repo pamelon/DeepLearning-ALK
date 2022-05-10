@@ -24,19 +24,19 @@ And then...
 
 But for us, users - this is a transparent layer. We just need an object to do something for us.  
 
-![](img/animation.jpg)  
+<img src="animation.jpg" alt="You as a graphic designer" style="width:700px;"/>
 
 So what is this CPU?
 
 ![](img/cpu.png)  
 
 CPU is a single pair of hands:
-
-![](img/cpu-hands.jpg)  
+ 
+<img src="cpu-hands.jpg" alt="CPU as a hand" style="width:900px;"/>
 
 But what if we need multiple pairs of hands?
 
-![](img/gpu-hands.jpg) 
+<img src="gpu-hands.jpg" alt="GPU as hands" style="width:900px;"/>
 
 ![](img/gpu.png)  
 
@@ -63,3 +63,4 @@ So how big should my rented apartment be to fit in all the cores?
 That's why:  
 
 ![](img/cloud-computing.jpg)  
+<img src="img/cloud-computing.jpg" alt="Cloud Computing sign" style="width:900px;"/>
