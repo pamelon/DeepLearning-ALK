@@ -86,3 +86,13 @@ Performance with precision
 ![](../Class-04.20/img/relu.png)
 
 4. ...
+
+# CGPMs and Omniglot Challenge
+
+![](img/omniglot.jpg)
+
+As promised here is the info about the Omniglot Dataset: https://github.com/brendenlake/omniglot  
+Here the article on the Omniglot Challenge: https://arxiv.org/abs/1902.03477  
+And here a good starter for CGPMs and.. what we are missing in our deep learning approach: https://link.springer.com/article/10.1007/s13218-021-00705-x  
+
+The last article is AMAZING. It is about how do we understand thinking, human brains and what might be needed to create this sort of Strong AI (human like AI). It toucher on philosophical and implementational concepts and really drives home the point about Deep Learning only scratching the surface.
