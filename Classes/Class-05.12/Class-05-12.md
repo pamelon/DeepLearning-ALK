@@ -62,7 +62,9 @@ More on CPU, GPU, TPU: https://www.youtube.com/watch?v=6ZDoFomU10A
 # CUDA 
 
 ![](img/nvidia.jpg)   
-CUDA intro (with GPU explanation) in 6 episodes: https://www.youtube.com/watch?v=4APkMJdiudU&list=PLC6u37oFvF40BAm7gwVP7uDdzmW83yHPe 
+CUDA intro (with GPU explanation) in 6 episodes: https://www.youtube.com/watch?v=4APkMJdiudU&list=PLC6u37oFvF40BAm7gwVP7uDdzmW83yHPe  
+CUDA package installer: https://docs.nvidia.com/cuda/cuda-installation-guide-microsoft-windows/index.html  
+CUDA install tutorial: https://www.tutorialspoint.com/cuda/cuda_installation.htm  
 
 Example is in /code folder for you to [have a peek](code/cuda-example.cu).  
 And if you have a GPU - give it a spin!
