@@ -16,6 +16,8 @@ Time to check if the class has brought you some value indeed: https://forms.offi
 
 Thanks SO MUCH for our class this semester. 'Deep Learning' class was a blast 💥 (for me at least). It was a pleasure meeting you online and in person. Wishing you all the best in your endeavors!  
 
+![](img/confetti.gif)  
+
 If you have any DL/ML/Cloud/Work, or any other questions: hit me up!  
 You have my email, and also you can find me here: https://www.linkedin.com/in/pamela-krzypkowska/  
 
