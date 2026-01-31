@@ -10,14 +10,14 @@ Class dates and contents are as follows:
 
 | Date         | Time          | Subject                       | Materials                                    |
 |--------------|---------------|-------------------------------|----------------------------------------------|
-| 20.04 (Wed)  | 15:45 - 19:00 |  Neural Networks Introduction | [20.04](Classes/Class-04.20/Class-04.20.md)  |
-| 28.04 (Th)   | 15:45 - 19:00 |  BERT and GPT-3 - DL in NLP   | [28.04](Classes/Class-04.28/Class-04.28.md)  |
-| 05.05 (Th)   | 15:45 - 19:00 |  Convolution - DL in VIsion   | [05.05](Classes/Class-05.05/Class-05-05.md)  |
-| 12.05 (Th)   | 15:45 - 19:00 |  DL in Cloud, GPU             | [12.05](Classes/Class-05.12/Class-05-12.md)  |
-| 19.05 (Th)   | 15:45 - 19:00 |  Project result presentations | [19.05](Classes/Class-05.19/Class-05-19.md)  |
+| 24.02 (Tue) 27.02 (Sat)  | 17:30 - 20:30 |  Neural Networks Introduction | [Class 1](Classes/Class-1/Class-1.md)  |
+| 03.03 (Tue) 28.02 (Sun) | 17:30 - 20:30 12:00 - 15:30 |  BERT and GPT-3 - DL in NLP   | [Class 2](Classes/Class-2/Class-2.md)  |
+| 17.03 (Tue) 01.03 (Sun) | 17:30 - 20:30 12:00 - 15:30 |  Convolution - DL in VIsion   | [Class 3](Classes/Class-3/Class-3.md)  |
+| 24.03 (Tue) 25.04 (Sat) | 17:30 - 20:30 12:00 - 15:30 |  DL in Cloud, GPU             | [Class 4](Classes/Class-4/Class-4.md)  |
+| 06.04 (Tue) 26.04 (Sun)   | 17:30 - 20:30 12:00 - 15:30 |  Project result presentations | [Class 5](Classes/Class-5/Class-5.md)  |
 
-We will be working on the given subject and learn each day until 18:00. 
-18:00 - 19:00 will be time for project questions, quandries and consultations. 
+ 
+Last 30min. of every class will be time for project questions, quandries and consultations. 
 
 Materials used during classes will be shared in this repository in the coresponding folders. 
 
@@ -38,7 +38,3 @@ We are here to learn and please:
 - Be on time ⌛
 
 ![](img/dll-basic-cute.png)
-
-
-
-
