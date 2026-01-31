@@ -2,14 +2,14 @@
 
 Hi all, my name is Pamela Krzypkowska and I will be teaching you about Deep Learning this semester. 
 Some information about me:
-1. I work as a Cloud Solution Architect specializing in AI @ Microsoft
-2. I 💌 'Animal Crossing' and TikTok
+1. I work in the Ministry of Digital Affairs
+2. I 💌 Zelda and knitting
 3. I graduated Computer Science @ WUT and Philisophy @ UW
 
 # What do you know about DL? 
 
-If you have not done it already, please fill in the class form. The form is anonymous.
-Tell me what you know about DL so the class can bring you more value: https://forms.office.com/r/bTCneHUzC6
+Have you worked with Deep Learning Methods?
+What ML Methods are you familiar with? 
 
 # DL Intro
 
@@ -68,6 +68,10 @@ And what about the brain?
 
 <img src="img/neuron.png" alt="Simplified Neuron" style="width:600px;"/>
 Source: https://en.wikipedia.org/wiki/Neuron  
+
+# Environment Set-up
+
+# First steps
 
 
 
