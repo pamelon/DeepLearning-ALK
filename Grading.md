@@ -53,9 +53,21 @@ The results I am expecting at the end of your projects, regardless of the projec
 This all needs to be included in the frinal presentation during the last class.
 Remember that the presentations are made by each team **for your collegues**. Show what you have learned so that we all can leave this class knowing a bit more ☺️
 
+## AI Tools
 
+You are allowed to use AI tools (including generative AI) during your project.
 
+However:
 
+If you use them, you must understand what they generate.
+You must be able to explain every architectural choice, every loss function, and every line of code you present.
 
+If something was generated with AI and you cannot explain it — it should not be in your project.
 
+Use AI as a tool for exploration, debugging, or acceleration.
+But the reasoning, interpretation, and conclusions must be yours.
 
+When in doubt, look to the [Kożmiński GenAI Guidelines](https://www.kozminski.edu.pl/en/news/kozminski-university-recommendations-regarding-use-ai-based-generators-such-chatgpt) or ask (this time) me! not only generative AI tools 🥰
+
+Please include in your code, presentation or report if you've used generative tools, and for what. 
+This is an opportunity for all of us to learn new ways to use cool tools.

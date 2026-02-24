@@ -8,7 +8,7 @@ Some information about me:
 
 # What do you know about DL? 
 
-Have you worked with Deep Learning Methods?
+Have you worked with Deep Learning Methods?  
 What ML Methods are you familiar with? 
 
 # DL Intro

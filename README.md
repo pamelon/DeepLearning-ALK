@@ -20,6 +20,8 @@ Class dates and contents are as follows:
 Last 30min. of every class will be time for project questions, quandries and consultations. 
 
 Materials used during classes will be shared in this repository in the coresponding folders. 
+Anyone wanting to deep dive into the topic, basic literature is: https://deeplearningwithpython.io/
+For more, please ask me, I will do my best to tailor your readings. 
 
 The environment set up for what we are starting with is explained here: https://www.tutorialspoint.com/keras/keras_installation.htm. We'll be using python virtual environments and will have some time for set up and questions during our first class.
 
