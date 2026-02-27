@@ -11,7 +11,7 @@ Class dates and contents are as follows:
 | Date         | Time          | Subject                       | Materials                                    |
 |--------------|---------------|-------------------------------|----------------------------------------------|
 | 24.02 (Tue) <br/> 27.02 (Sat)  | 17:30 - 21:00 |  Neural Networks Introduction | [Class 1](Classes/Class-1/Class-1.md)  |
-| 03.03 (Tue) <br/> 28.02 (Sun) | 17:30 - 21:00  <br/> 12:00 - 15:30 |  BERT and GPT-3 - DL in NLP   | [Class 2](Classes/Class-2/Class-2.md)  |
+| 03.03 (Tue) <br/> 28.02 (Sun) | 18:30 - 22:00  <br/> 12:00 - 15:30 |  BERT and GPT-3 - DL in NLP   | [Class 2](Classes/Class-2/Class-2.md)  |
 | 17.03 (Tue) <br/> 01.03 (Sun) | 17:30 - 21:00 <br/>  12:00 - 15:30 |  Convolution - DL in VIsion   | [Class 3](Classes/Class-3/Class-3.md)  |
 | 24.03 (Tue) <br/> 25.04 (Sat) | 17:30 - 21:00 <br/>  12:00 - 15:30 |  DL in Cloud, GPU             | [Class 4](Classes/Class-4/Class-4.md)  |
 | 06.04 (Tue) <br/> 26.04 (Sun)   | 17:30 - 21:00 <br/>  12:00 - 15:30 |  Project result presentations | [Class 5](Classes/Class-5/Class-5.md)  |
