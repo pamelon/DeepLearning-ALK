@@ -13,6 +13,32 @@ Some quick terms to repeat:
 5. Batch
 6. Epoch
 
+# General rules
+
+We need to find the sweet spot in training.
+
+![](img/overfit.jpg)  
+
+When training behaves unexpectedly, the issue is almost always related to the configuration of the gradient descent process.
+
+This typically involves:
+
+- The choice of optimizer  
+- The initialization of model weights  
+- The learning rate  
+- The batch size  
+
+These parameters are interdependent. Changing one often affects the behavior of the others.
+
+In practice, it is usually sufficient to tune the learning rate and the batch size while keeping the remaining parameters constant. Systematic adjustment is more effective than changing multiple variables at once. Remember experimentation - one parameter change per one test.
+
+- Modify the learning rate.  
+  A learning rate that is too high can cause updates to overshoot.  
+  A learning rate that is too low can make training appear stagnant.
+
+- Increase the batch size.  
+  Larger batches produce gradients with lower variance and more stable updates.
+
 # Let's talk about language 
 
 Let us look at these examples:  
