@@ -98,6 +98,8 @@ Well, the actual transformer:
 
 ![](img/attention-tokens.png)  
 
+Best article on the topic I have read so far: https://writings.stephenwolfram.com/2023/02/what-is-chatgpt-doing-and-why-does-it-work/
+
 BERT:
 1. aim to predict the relationships between sentences by analyzing them holistically, as well as token-level tasks such as named entity recognition and question answering.
 2. is designed to pretrain deep bidirectional representations from unlabeled text by jointly conditioning on both
