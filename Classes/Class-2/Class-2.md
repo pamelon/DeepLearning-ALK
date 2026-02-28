@@ -94,6 +94,10 @@ Well, the actual transformer:
 
 ![](img/trans-rnn.jpg)
 
+![](img/attention.png)  
+
+![](img/attention-tokens.png)  
+
 BERT:
 1. aim to predict the relationships between sentences by analyzing them holistically, as well as token-level tasks such as named entity recognition and question answering.
 2. is designed to pretrain deep bidirectional representations from unlabeled text by jointly conditioning on both
