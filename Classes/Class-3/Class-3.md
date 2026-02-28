@@ -11,9 +11,6 @@ Some quick terms to repeat:
 3. Transformer
 4. BERT
 
-Two words about baselines  
-![](img/baseline.png)  
-
 # Let's now look at vision
 
 One thing to remember is that Depp Learning rose to the recent promimance in 2010s because of problems related to vision, image recognition and image tagging. What we have with DL now, is because of a very famous algorithmic competition called ImageNet Large Scale Visual Recognition Challenge (ILSVRC), in short just ImageNet Challenge. In the challenge you had access to the data of over a milion images for training, that are put in a 1000 categories from "Strawberry", "Dog" to "Animal", overlapping each other in some cases.  
@@ -30,8 +27,6 @@ The problems:
 2. Need for large dataset of examples
 3. Is that the way we, humans think?
 
-[Finally the brain!](../Class-04.20/Class-04.20.md)  
-
 Getting back to the ImageNet:
 
 In 2012 Alex Krivshevsky with his team designed a network that declassified the competition. The network achieved an error of 15.3%, around 11 percentage points lower than that next best one. This is crazy for ML standards, as you are probably aware. 
@@ -47,6 +42,10 @@ The actual paper (worth looking into for those of you who are interested): https
 <img src="img/parts-of-cat.png" alt="Parts of a cat" style="width:700px;"/>
 
 ![](img/convolution.gif)
+
+ConvNet can recognize a pattern anywhere, because of the filter it uses. A densely connected model would have to learn the pattern every time if it is being seen in a new location. Filter allows the patterns to move.
+
+Convolutions operate over rank-3 tensors, called feature maps. They have width, height and a number of channels. As the network goes on, the number of channels usually increases, and the weight and height decreases. 
 
 ![](img/filter-conv.png)
 Source: https://www.manning.com/books/deep-learning-with-python 
