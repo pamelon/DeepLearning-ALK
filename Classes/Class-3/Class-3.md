@@ -53,6 +53,8 @@ Source: https://www.manning.com/books/deep-learning-with-python
 More on convolution: https://www.youtube.com/watch?v=YRhxdVk_sIs  
 And deeper (you get the joke): https://www.youtube.com/watch?v=m8pOnJxOcqY  
 
+Awesome visualisation of Covnet vs. Feedforward network on MNIST: https://adamharley.com/nn_vis/ 
+
 And padding?  
 
 # And now into MaxPooling
