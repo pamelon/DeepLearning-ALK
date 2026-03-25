@@ -8,7 +8,7 @@ So lets start with:
 Some quick terms to repeat:
 1. Convolutional Layer
 2. MaxPooling Layer
-3. ZlexNet
+3. AlexNet
 4. Baseline Model
 
 # Processing Units
