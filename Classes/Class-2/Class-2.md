@@ -13,7 +13,62 @@ Some quick terms to repeat:
 5. Batch
 6. Epoch
 
-# General rules
+# General rules to start with
+
+Also when you have a tabular data and you wander what to start with:
+
+When you get a tabular dataset, do not overthink architecture.
+
+Start with this baseline. Always.
+
+Preprocessing (mandatory) is simple:
+
+- Numerical features → standardize  
+- Categorical features → one-hot (or embeddings if large)  
+- Handle missing values  
+
+When it comes to baseline model start with:
+
+Dense(64) → ReLU  
+Dense(32) → ReLU  
+Dense(output)
+
+That’s it.
+
+In output:
+
+- Binary classification → Dense(1, sigmoid)  
+- Multi-class → Dense(K, softmax)  
+- Regression → Dense(1) (no activation)  
+
+- Optimizer → Adam  
+- Loss:
+  - Binary → binary_crossentropy  
+  - Multi-class → sparse_categorical_crossentropy  
+  - Regression → mse  
+
+- Batch size: 32  
+- Epochs: 20–50  
+- Add EarlyStopping  
+
+After training, ask:
+
+- Did loss decrease?  
+- Does validation make sense?  
+
+If not → fix data, not model.
+
+Only then:
+
+If underfitting:
+- Increase number of neurons in a layer (128 → 64) - mind bottlenecks
+- Add one more layer  
+
+If overfitting:
+- Add Dropout(0.2–0.5)  
+- Reduce size  
+
+# General rules for traning
 
 We need to find the sweet spot in training.
 
