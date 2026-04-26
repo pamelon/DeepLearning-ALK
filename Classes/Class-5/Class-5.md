@@ -12,8 +12,6 @@ Some quick terms to repeat:
 
 # Grades (for me, not for you yet)
 
-Time to check if the class has brought you some value indeed: https://forms.office.com/r/Qj0GgEnhau  
-
 Thanks SO MUCH for our class this semester. 'Deep Learning' class was a blast 💥 (for me at least). It was a pleasure meeting you online and in person. Wishing you all the best in your endeavors!  
 
 ![](img/confetti.gif)  
