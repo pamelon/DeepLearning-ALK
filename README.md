@@ -14,9 +14,9 @@ Class dates and contents are as follows:
 | 19.10 (Mon) | 17:00 - 21:00 |  BERT and GPT-3 - DL in NLP   | [Class 2](Classes/Class-2/Class-2.md)  |
 | 26.10 (Mon) | 17:00 - 21:00 |  Convolution - DL in VIsion   | [Class 3](Classes/Class-3/Class-3.md)  |
 | 09.11 (Mon) | 17:00 - 20:00 |  DL in Cloud, GPU             | [Class 4](Classes/Class-4/Class-4.md)  |
-| 16.11 (Mon) 17:00 - 20:00 |  Generative AI and new developments |  |
-| 23.11 (Mon) 17:00 - 20:00 |  VLLMs - DL in Vision |  |
-| 07.12 (Mon) 17:00 - 20:00 |  Project result presentations |  |  [Class 5](Classes/Class-5/Class-5.md)  |
+| 16.11 (Mon) |  17:00 - 20:00 |  Generative AI and new developments |  |
+| 23.11 (Mon) |  17:00 - 20:00 |  VLLMs - DL in Vision |  |
+| 07.12 (Mon) | 17:00 - 20:00 |  Project result presentations |  |  [Class 5](Classes/Class-5/Class-5.md)  |
  
 Last 30min. of every class will be time for project questions, quandries and consultations. 
 
