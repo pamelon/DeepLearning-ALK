@@ -16,7 +16,7 @@ Class dates and contents are as follows:
 | 09.11 (Mon) | 17:00 - 20:00 |  DL in Cloud, GPU             | [Class 4](Classes/Class-4/Class-4.md)  |
 | 16.11 (Mon) 17:00 - 20:00 |  Generative AI and new developments |  |
 | 23.11 (Mon) 17:00 - 20:00 |  VLLMs - DL in Vision |  |
-| 07.12 (Mon) 17:00 - 20:00 |  Project result presentations | [Class 5](Classes/Class-5/Class-5.md)  |
+| 07.12 (Mon) 17:00 - 20:00 |  Project result presentations |  |  [Class 5](Classes/Class-5/Class-5.md)  |
  
 Last 30min. of every class will be time for project questions, quandries and consultations. 
 
