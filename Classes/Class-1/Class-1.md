@@ -2,7 +2,7 @@
 
 Hi all, my name is Pamela Krzypkowska and I will be teaching you about Deep Learning this semester. 
 Some information about me:
-1. I work in the Ministry of Digital Affairs
+1. I work at the AI Development and Safety Commision
 2. I 💌 Zelda and knitting
 3. I graduated Computer Science @ WUT and Philisophy @ UW
 

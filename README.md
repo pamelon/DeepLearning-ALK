@@ -1,6 +1,6 @@
 # DeepLearning-ALK
 
-Repository with materials for 2026 Deep Learning courses at Koźmiński University
+Repository with materials for 2026/27 Deep Learning courses at Koźmiński University.
 
 ## Classes
 
@@ -10,12 +10,13 @@ Class dates and contents are as follows:
 
 | Date         | Time          | Subject                       | Materials                                    |
 |--------------|---------------|-------------------------------|----------------------------------------------|
-| 24.02 (Tue) <br/> 27.02 (Sat)  | 17:30 - 21:00 |  Neural Networks Introduction | [Class 1](Classes/Class-1/Class-1.md)  |
-| 03.03 (Tue) <br/> 28.02 (Sun) | 18:30 - 22:00  <br/> 12:00 - 15:30 |  BERT and GPT-3 - DL in NLP   | [Class 2](Classes/Class-2/Class-2.md)  |
-| 17.03 (Tue) <br/> 01.03 (Sun) | 17:30 - 21:00 <br/>  12:00 - 15:30 |  Convolution - DL in VIsion   | [Class 3](Classes/Class-3/Class-3.md)  |
-| 24.03 (Tue) <br/> 25.04 (Sat) | 17:30 - 21:00 <br/>  12:00 - 15:30 |  DL in Cloud, GPU             | [Class 4](Classes/Class-4/Class-4.md)  |
-| 05.05 (Tue) <br/> 26.04 (Sun)   | 17:30 - 21:00 <br/>  12:00 - 15:30 |  Project result presentations | [Class 5](Classes/Class-5/Class-5.md)  |
-
+| 05.10 (Mon) | 17:00 - 20:00 |  Neural Networks Introduction | [Class 1](Classes/Class-1/Class-1.md)  |
+| 19.10 (Mon) | 17:00 - 21:00 |  BERT and GPT-3 - DL in NLP   | [Class 2](Classes/Class-2/Class-2.md)  |
+| 26.10 (Mon) | 17:00 - 21:00 |  Convolution - DL in VIsion   | [Class 3](Classes/Class-3/Class-3.md)  |
+| 09.11 (Mon) | 17:00 - 20:00 |  DL in Cloud, GPU             | [Class 4](Classes/Class-4/Class-4.md)  |
+| 16.11 (Mon) 17:00 - 20:00 |  Generative AI and new developments |  |
+| 23.11 (Mon) 17:00 - 20:00 |  VLLMs - DL in Vision |  |
+| 07.12 (Mon) 17:00 - 20:00 |  Project result presentations | [Class 5](Classes/Class-5/Class-5.md)  |
  
 Last 30min. of every class will be time for project questions, quandries and consultations. 
 
