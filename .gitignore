@@ -160,7 +160,7 @@ cython_debug/
 #.idea/
 
 # Course datasets (downloaded by notebooks)
-Classes/Class-2/code/imdb_train/
-Classes/Class-2/code/imdb_val/
-Classes/Class-2/code/imdb_test/
-Classes/Class-5/code/data/
+Classes/*/code/imdb_train/
+Classes/*/code/imdb_val/
+Classes/*/code/imdb_test/
+Classes/*/code/data/
