@@ -158,3 +158,9 @@ cython_debug/
 #  and can be added to the global gitignore or merged into this file.  For a more nuclear
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
+
+# Course datasets (downloaded by notebooks)
+Classes/Class-2/code/imdb_train/
+Classes/Class-2/code/imdb_val/
+Classes/Class-2/code/imdb_test/
+Classes/Class-5/code/data/
