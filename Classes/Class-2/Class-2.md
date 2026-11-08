@@ -25,6 +25,7 @@ The good news: the network itself barely changes. What changes is the **last lay
 Notebooks for today:
 1. [Regression – California housing prices](code/regression.ipynb)
 2. [Classification – IMDB reviews (binary) and Reuters newswires (multi-class)](code/classification.ipynb)
+3. [How to conduct experiments – reproducible runs, seeds, configs and reporting](code/experiments.ipynb)
 
 # Framing the problem first
 
@@ -195,6 +196,18 @@ In practice, it is usually sufficient to tune the learning rate and the batch si
 
 - Increase the batch size.  
   Larger batches produce gradients with lower variance and more stable updates.
+
+# How to run experiments
+
+Every change you make to a model is an experiment. To trust its result:
+
+1. **Fix the randomness** – set seeds (`keras.utils.set_random_seed`) and make the data split once.
+2. **Keep all settings in one place** – a config block or a YAML/JSON file, saved together with the results.
+3. **Change one thing at a time** – otherwise you won't know what helped.
+4. **Log everything** – training history, best checkpoint, library versions (`pip freeze`).
+5. **Repeat over 3–5 seeds** – report mean ± std, not your best single run.
+
+The full guide with a worked example (the minimum workflow for your project) is in the [experiments notebook](code/experiments.ipynb).
 
 # Debugging checklist
 
