@@ -3,97 +3,106 @@
 So lets start with:
 1. Any questions, concerns or thoughts from our last lecture? 
 2. So one from me, what did we talk about last time? 
-3. And, what problems do we need to address when building a model for language understanding?
+3. And, how do we choose the output layer and loss for a given problem?
 
 Some quick terms to repeat:
-1. Bag of words
-2. Information bottleneck
-3. Transformer
-4. BERT
+1. Regression vs. classification
+2. Sigmoid and softmax
+3. Crossentropy
+4. Overfitting
+5. Validation set
 
-# Let's now look at vision
+# Let's talk about language 
 
-One thing to remember is that Depp Learning rose to the recent promimance in 2010s because of problems related to vision, image recognition and image tagging. What we have with DL now, is because of a very famous algorithmic competition called ImageNet Large Scale Visual Recognition Challenge (ILSVRC), in short just ImageNet Challenge. In the challenge you had access to the data of over a milion images for training, that are put in a 1000 categories from "Strawberry", "Dog" to "Animal", overlapping each other in some cases.  
-Competition: https://www.image-net.org/challenges/LSVRC/   
+Let us look at these examples:  
+1. Not to brag, but I’m fluent in 10 languages. English and Binary.
+2. Mary asked John to leave. Mary asked to leave John.
+3. I made a great deal, killed two birds with one stone.
 
-The whole ImageNet dataset has been manually tagged and consists of 14 milion images belonging to 20 000 classes. 
+What types of problems do we solve:  
+1. Where in the text can i find an answer to that question?
+2. What is this text about?
+3. How can i summarize this text?
+4. Is that text appropriate?
+5. How do I say that in french?
 
-![](img/imagenet-pictures.png) 
+And more broadly:  
+1. How can i answer this question?
+2. What is the meaning of that sentence?
+3. Was that funny? 
+4. How does that relate to the world?
 
-Do you see any problems with that?
+# How do we deal with words
 
-The problems:
-1. Manual annotation done by humans
-2. Need for large dataset of examples
-3. Is that the way we, humans think?
-
-Getting back to the ImageNet:
-
-In 2012 Alex Krivshevsky with his team designed a network that declassified the competition. The network achieved an error of 15.3%, around 11 percentage points lower than that next best one. This is crazy for ML standards, as you are probably aware. 
-
-<img src="img/alexnet.jpg" alt="AlexNet" style="width:800px;"/>
-
-Deep dive into AlexNet: https://www.youtube.com/watch?v=7LQSdPjWjdA  
-The AlexNet code example: https://github.com/krishnaik06/Advanced-CNN-Architectures/blob/master/Transfer%20Learning%20Alexnet.ipynb  
-The actual paper (worth looking into for those of you who are interested): https://proceedings.neurips.cc/paper/2012/file/c399862d3b9d6b76c8436e924a68c45b-Paper.pdf   
-
-# So what is this convolution?
-
-<img src="img/parts-of-cat.png" alt="Parts of a cat" style="width:700px;"/>
-
-![](img/convolution.gif)
-
-ConvNet can recognize a pattern anywhere, because of the filter it uses. A densely connected model would have to learn the pattern every time if it is being seen in a new location. Filter allows the patterns to move.
-
-Convolutions operate over rank-3 tensors, called feature maps. They have width, height and a number of channels. As the network goes on, the number of channels usually increases, and the weight and height decreases. 
-
-![](img/filter-conv.png)
+![](img/language-processing.png)  
 Source: https://www.manning.com/books/deep-learning-with-python 
 
-More on convolution: https://www.youtube.com/watch?v=YRhxdVk_sIs  
-And deeper (you get the joke): https://www.youtube.com/watch?v=m8pOnJxOcqY  
+![](img/ngrams.png)  
 
-Awesome visualisation of Covnet vs. Feedforward network on MNIST: https://adamharley.com/nn_vis/ 
+Let us make a representation:  
 
-And padding?  
+I love dogs and dogs love snacks.  
+[1 2 3 4 3 2 5]  
+Lets remember that networks (and any model to be fair) work on representations. We create representations to be as efficient as possible it means - take the least space and leave the most meaning.
 
-# And now into MaxPooling
+![](img/stopwords.png)
 
-In short - downsampling  
-For:
-1. Efficiency of processing
-2. Efficiency of memory
-3. Keeping the most important parts of each section
+# BERT
 
-![](img/maxpool.png)
+What is a model? It's a problem representation. In this case - a language representation.  
 
-![](img/maxpooling-example.jpg)
+![](img/lstm.jpg)
 
-MaxPooling: https://www.youtube.com/watch?v=ZjM_XQa5s6s  
+LSTMs are:
+1. Slow to train
+2. Rather unidirectional
+3. No deep context perspective
+4. No task separation
 
-# Now back to AlexNet!
+![](img/transformer.jpg)
 
-What did AlexNet do that made it so revolutionary? 
-1. Data augmentation
+Well, the actual transformer:  
 
-![](img/augmentation.png)
+![](img/transformer-nn.png)
 
-2. Dropout
+![](img/trans-rnn.jpg)
 
-![](img/dropout.png)
+![](img/attention.png)  
 
-3. ReLU
-Performance with precision 
-![](../Class-04.20/img/relu.png)
+![](img/attention-tokens.png)  
 
-4. ...
+Best article on the topic I have read so far: https://writings.stephenwolfram.com/2023/02/what-is-chatgpt-doing-and-why-does-it-work/
 
-# CGPMs and Omniglot Challenge
+BERT:
+1. aim to predict the relationships between sentences by analyzing them holistically, as well as token-level tasks such as named entity recognition and question answering.
+2. is designed to pretrain deep bidirectional representations from unlabeled text by jointly conditioning on both
+left and right context in all layers. 
+3. can create state-of-the-art models for a wide range of tasks, such as question answering,
+language inference and translation.
 
-![](img/omniglot.jpg)
+Source: https://aclanthology.org/N19-1423.pdf [BERT: Pre-training of Deep Bidirectional Transformers for
+Language Understanding]  
 
-As promised here is the info about the Omniglot Dataset: https://github.com/brendenlake/omniglot  
-Here the article on the Omniglot Challenge: https://arxiv.org/abs/1902.03477  
-And here a good starter for CGPMs and.. what we are missing in our deep learning approach: https://link.springer.com/article/10.1007/s13218-021-00705-x  
+![](img/tokens-bert.png)
 
-The last article is AMAZING. It is about how do we understand thinking, human brains and what might be needed to create this sort of Strong AI (human like AI). It toucher on philosophical and implementational concepts and really drives home the point about Deep Learning only scratching the surface.
+![](img/bert-steps.jpg)
+Source: https://aclanthology.org/N19-1423.pdf [BERT: Pre-training of Deep Bidirectional Transformers for
+Language Understanding]  
+
+On SQuAD: https://rajpurkar.github.io/SQuAD-explorer/?msclkid=2b188d20c6c111ec90a8707c579811f9  
+
+Fun-facts:
+1. BERT_BASE contains 110M parameters and BERT_LARGE contains 340M parameters
+2. BERT is a 2018 child of Google Researchers
+3. Pretraining is a KEY element of BERT - we are separating understanding language from a given task
+
+If you want to dig deeper and see how to use BERT, I am redirecting yoi here: https://github.com/jalammar/jalammar.github.io/blob/master/notebooks/bert/A_Visual_Notebook_to_Using_BERT_for_the_First_Time.ipynb?msclkid=f0d906e3c6c511ec810feae29c10290c
+
+Easy and less-easy (for eager heads) explanation of BERT: https://www.youtube.com/watch?v=xI0HHN5XKDo  
+More techy with a notebook: https://www.youtube.com/watch?v=TLPmlVeEf1k  
+VERY good Stanford Lecture on NLP and pretrained models: https://www.youtube.com/watch?v=knTc-NQSjKA
+
+
+
+
+
