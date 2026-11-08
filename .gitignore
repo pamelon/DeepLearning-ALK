@@ -164,3 +164,15 @@ Classes/*/code/imdb_train/
 Classes/*/code/imdb_val/
 Classes/*/code/imdb_test/
 Classes/*/code/data/
+
+# Files produced by running the notebooks
+Classes/*/code/train/
+Classes/*/code/dogs_vs_cats_small/
+Classes/*/code/runs/
+Classes/*/code/logs/
+Classes/*/code/*.keras
+Classes/*/code/history_seed_*.csv
+Classes/*/code/ticket_classifier.png
+Classes/*/code/updated_ticket_classifier.png
+Classes/*/code/cuda-example
+Classes/*/code/cuda-example.exe

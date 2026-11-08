@@ -3,12 +3,13 @@
 So lets start with:
 1. Any questions, concerns or thoughts from our last lecture? 
 2. So one from me, what did we talk about last time? 
-3. And, what problems do we encounter when training models for vision?
+3. And, what is the difference between a model and an agent?
 
 Some quick terms to repeat:
-1. CPU
-2. GPU
-3. Cloud Computing
+1. Next-token prediction
+2. Temperature
+3. CLIP and VLMs
+4. Agent harness
 
 # Grades (for me, not for you yet)
 
