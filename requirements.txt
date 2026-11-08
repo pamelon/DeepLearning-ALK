@@ -1,0 +1,33 @@
+# Deep Learning @ Koźmiński – everything the class notebooks need.
+# Install inside a virtual environment:  pip install -r requirements.txt
+# Tested with Python 3.13. TensorFlow does not support every new Python release right away,
+# so if installation fails on a brand-new Python, use 3.12 or 3.13.
+
+# Jupyter
+notebook
+ipykernel
+ipywidgets          # progress bars / widgets (Kaggle login in Class 4)
+
+# Core – all classes
+tensorflow>=2.16    # 2.16+ ships with Keras 3
+keras>=3
+numpy
+matplotlib
+
+# Class 3 – language
+regex
+
+# Class 4 – vision and the Functional API
+kagglehub           # downloads the dogs-vs-cats dataset
+tensorboard
+pydot               # keras.utils.plot_model (also needs Graphviz installed: https://graphviz.org/download/)
+
+# Class 5 – frameworks
+torch
+torchvision
+jax                 # CPU version; for an NVIDIA GPU on Linux/WSL use: pip install -U "jax[cuda12]"
+
+# Class 6 – LLMs, VLMs and agents (small Hugging Face models, run on CPU)
+transformers
+pillow
+requests

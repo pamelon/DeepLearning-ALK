@@ -15,7 +15,7 @@ __global__ void add(float *d_vec1, float *d_vec2, int N)
 
     if(tid < N)
     {
-        //h is used for device variables (d_name)
+        //d_ prefix: device (GPU) variables, h_ prefix: host (CPU) variables
         d_vec1[tid] = d_vec1[tid] + d_vec2[tid];
     }
 }
@@ -68,20 +68,16 @@ int main(int argc , char **argsv)
     cudaMemcpy(h_vec1, d_vec1, N * sizeof(float), cudaMemcpyDeviceToHost);
     cudaMemcpy(h_vec2, d_vec2, N * sizeof(float), cudaMemcpyDeviceToHost);
 
-    //checking results
+    //checking results - every element should be 1.0 + 2.0 = 3.0
     for(int i=0; i < N; i++)
     {
         if(h_vec1[i] != 3.0f)
         {
-            std::cout << "Incorrect result" << std::endl;
+            std::cout << "Incorrect result at index " << i << std::endl;
             return 1;
         }
-        else
-        {
-            std::cout << "Correct result" << std::endl;
-            return 1; 
-        }
     }
+    std::cout << "Correct result" << std::endl;
 
     //cleaning the memory on host
     delete[] h_vec1;
@@ -90,4 +86,5 @@ int main(int argc , char **argsv)
     //cleaning the memory on device
     cudaFree(d_vec1);
     cudaFree(d_vec2);
-} 
+    return 0;
+}
