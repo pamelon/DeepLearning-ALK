@@ -224,12 +224,6 @@ Well, the actual transformer:
 
 ![](img/transformer-nn.png)
 
-The full architecture as a clean diagram – encoder on the left, decoder on the right:
-
-<img src="img/transformer-full-architecture.png" alt="Transformer full architecture" width="600"/>
-
-<sub>Image: Daniel Voigt Godoy, [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/), via [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Transformer,_full_architecture.png)</sub>
-
 ![](img/trans-rnn.jpg)
 
 ## Why was this a revolution?
