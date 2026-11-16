@@ -83,6 +83,16 @@ Compare with the laptop notebooks above:
 | Control | Full – you can change, fine-tune, inspect everything | Only what the API allows |
 | Setup | Download ~1 GB, needs RAM/GPU | An account and a few lines of code |
 
+Besides `gpt-4.1-mini`, our Foundry project has a few more models deployed, so you can see the whole "generative" family in one place (Foundry portal → project `dl-alk-class` → Playgrounds):
+
+| Deployment | What it generates | Try this |
+|---|---|---|
+| `gpt-4.1-mini` | Text – and it understands images (a VLM, like SmolVLM, just much bigger) | Upload the cat photo from the VLM notebook and ask how many cats and remotes there are – compare with SmolVLM |
+| `Phi-4-mini-instruct` | Text, from a small **open-weight** model (Microsoft, ~4B parameters) | Ask both models the same tricky question – how much does size matter? |
+| `gpt-image-1.5` | Images from text (diffusion-style generation) | Generate the same prompt twice – why are the images different? |
+| `tts` / `whisper` | Speech from text / text from speech | Let `tts` read a Polish sentence, then let `whisper` transcribe it back |
+| `text-embedding-3-small` | Embeddings – a vector of 1 536 numbers per text | "The cat is sleeping on the sofa" vs. "A kitten naps on the couch": cosine similarity ~0.68; vs. "GPUs speed up matrix multiplication": ~0.09. Class 3, at scale – and the core of RAG |
+
 In the [notebook](code/foundry-chat.ipynb) we log in with our Azure account (Entra ID, no API keys in code), send messages, look at the token usage and cost, play with temperature, stream the answer, and finally give the model a tool – **the same agent loop as in the harness notebook**, but with a model that's actually good at it.
 
 ## Is it intelligence? François Chollet's view

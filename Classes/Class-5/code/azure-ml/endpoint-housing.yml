@@ -1,0 +1,8 @@
+$schema: https://azuremlschemas.azureedge.net/latest/managedOnlineEndpoint.schema.json
+# A REST API in front of the best AutoML model for California housing.
+# The endpoint is the address + authentication; deployments behind it run the model.
+# Endpoint names must be unique in the region - pass your own with --name:
+#   az ml online-endpoint create -f endpoint-housing.yml --name california-housing-<yourname>
+name: california-housing
+auth_mode: key
+description: Predicts median_house_value for a California district (AutoML LightGBM).
