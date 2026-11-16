@@ -16,36 +16,101 @@ Some quick terms to repeat:
 What is compute power?  
 What is a CPU?  
 
+## From switches to computers
+
+At the very bottom, a processor is made of **transistors** – tiny electrical switches (on/off, 1/0). A few transistors make a **logic gate** (AND, OR, NOT):
+
 ![](img/or-gate.gif)  
 
 And then...  
 
+Gates combine into circuits that add numbers, compare them, remember them:
+
 ![](img/gate-circuit.jpg)  
+
+Put billions of them on one chip and you get a processor. A modern laptop CPU has tens of billions of transistors; NVIDIA's H100 GPU has 80 billion.
 
 But for us, users - this is a transparent layer. We just need an object to do something for us.  
 
 <img src="img/animation.jpg" alt="You as a graphic designer" style="width:700px;"/>
 
-So what is this CPU?
+## How do we measure "compute"?
+
+In Deep Learning almost all the work is **multiplying and adding floating-point numbers** (remember the dot products from Class 1). So we measure compute in **FLOPS** – floating-point operations per second:
+
+| Hardware | Roughly how fast (order of magnitude) |
+|---|---|
+| A laptop CPU | ~0.1–1 TFLOPS (10¹²) |
+| A gaming GPU (e.g. RTX 4090) | ~80 TFLOPS in 32-bit, several hundred in 16-bit with tensor cores |
+| A data-center GPU (e.g. H100) | ~1 000 TFLOPS (1 PFLOPS) in 16-bit |
+
+To feel the scale: training GPT-3 (2020) took about 3 × 10²³ floating-point operations. On a single laptop CPU that's thousands of years; on thousands of data-center GPUs working together – a few weeks. **That gap is why hardware is a Deep Learning topic at all.**
+
+## So what is this CPU?
 
 ![](img/cpu.png)  
 More on how CPUs work here: https://www.youtube.com/watch?v=cNN_tTXABUA  
+
+The **CPU** (Central Processing Unit) is the general-purpose brain of the computer. It has **a few very powerful cores** (typically 4–64), each running at 3–5 GHz, with large caches and clever tricks (predicting branches, running instructions out of order) to make **one sequence of complicated steps** finish as fast as possible. It's built for **low latency**: your operating system, browser, Excel, a Python loop full of `if`s.
 
 CPU is a single pair of hands:
  
 <img src="img/cpu-hands.jpg" alt="CPU as a hand" style="width:900px;"/>
 
+## And the GPU?
+
 But what if we need multiple pairs of hands?
 
 <img src="img/gpu-hands.jpg" alt="GPU as hands" style="width:900px;"/>
 
+The **GPU** (Graphics Processing Unit) was built for computer graphics: to colour millions of pixels 60 times a second, where every pixel needs the same simple calculation. So a GPU has **thousands of small, simple cores** (an H100 has ~17 000) that all execute **the same instruction on different data** at the same time. It's built for **high throughput**: not one task fast, but a huge number of simple tasks at once.
+
 ![](img/gpu.png)  
-More on how GPUs work here: https://www.youtube.com/watch?v=SrAMBi_8tIk
-Even more on GPUs: https://www.youtube.com/watch?v=LfdK-v0SbGI 
+More on GPUs: https://www.youtube.com/watch?v=LfdK-v0SbGI 
 
 Parallelism is the core of GPU. We have a lot of hands but these are smaller and less complex hands. Actually GPU cannot do anything that CPU cannot do. CPU just does it (usually) slower.
 
 ![](img/cpu-gpu.png)  
+
+| | CPU | GPU |
+|---|---|---|
+| Cores | Few (4–64), powerful | Thousands, simple |
+| Optimized for | Latency – one complicated task, fast | Throughput – many simple tasks, together |
+| Good at | Branching logic, operating system, data loading, preprocessing | Matrix multiplications, convolutions, graphics |
+| Memory | System RAM (large, slower) | Its own VRAM (smaller, much faster) |
+| In Deep Learning | Prepares data, runs the training loop | Does the heavy maths |
+
+## Why does Deep Learning love GPUs so much?
+
+Remember Class 1: a Dense layer is a matrix multiplication, `output = relu(dot(input, W) + b)`. Every element of the result can be computed independently – thousands of small, identical multiply-and-add operations. That's exactly the "many small hands" job a GPU was built for.
+
+A quick count: our MNIST network from Class 1 has a `Dense(512)` layer on 784 inputs. For one batch of 128 images that's 128 × 784 × 512 ≈ **51 million** multiply-adds – for one layer, one batch, forward pass only. Training repeats it (plus the backward pass) hundreds of times per epoch. A CPU does these in small groups; a GPU does them in one go.
+
+Modern GPUs go one step further: **tensor cores** – special units that multiply whole small matrices in one step, in lower precision (16-bit or even 8-bit numbers). That's where the huge FLOPS numbers in the table come from.
+
+## The hidden bottleneck: memory
+
+Compute is only half the story. The numbers have to **get to** the cores, and memory is often the real limit:
+
+1. **Memory size (VRAM).** The whole model, the batch of data, and for training also the gradients and optimizer state must fit into GPU memory. A rule of thumb for a model with *N* parameters:
+   - just to **run** it in 16-bit precision: ~2 bytes × *N* → a 7-billion-parameter LLM needs ~14 GB,
+   - to **train** it with Adam: roughly 16 bytes × *N* or more → the same 7B model needs well over 100 GB – more than any single consumer GPU has.
+2. **Memory bandwidth.** How many bytes per second can be moved to the cores. An H100 moves ~3 TB/s from its memory; a typical laptop's RAM ~0.05–0.1 TB/s. When generating text with an LLM, the speed is limited mostly by bandwidth, not by FLOPS – every new token needs the whole model read from memory.
+3. **Moving data between CPU and GPU** is slow (more on that in the CUDA example below). Good training code keeps data on the GPU and prepares the next batch while the current one is computing.
+
+## Precision: fewer bits, more speed
+
+Numbers in a computer have a fixed size:
+
+| Format | Bits | Used for |
+|---|---|---|
+| float32 | 32 | The classic default for training |
+| float16 / bfloat16 | 16 | Today's standard for training big models ("mixed precision") – 2× less memory, much faster on tensor cores |
+| int8 / int4 | 8 / 4 | Running (inference) of LLMs on smaller hardware – "quantization". A 4-bit 7B model fits in ~4 GB, so it runs on a laptop |
+
+Neural networks are surprisingly tolerant of less precise numbers – that's one of the main tricks that made today's large models affordable.
+
+## Beyond GPUs
 
 What GPU is good for (and why?):
 1. Image rendering (in real time)
@@ -54,16 +119,25 @@ What GPU is good for (and why?):
 4. Cryptocurrency mining
 5. Gaming
 
-TPU - matrix processor, specifical for DL. Very fast matrix computation. Data flows directly from one compute unit to the next (a "systolic array"), so it needs far fewer trips to memory than a CPU or GPU.  
+TPU - matrix processor, specifical for DL. Very fast matrix computation. Data flows directly from one compute unit to the next (a "systolic array"), so it needs far fewer trips to memory than a CPU or GPU. TPUs are designed by Google and available only in Google Cloud (and in Colab).
 
-Why does Deep Learning love GPUs so much? Remember Class 1: a Dense layer is a matrix multiplication, `output = relu(dot(input, W) + b)`. Every element of the result can be computed independently – thousands of small, identical multiply-and-add operations. That's exactly the "many small hands" job a GPU was built for.
+**NPU** (Neural Processing Unit) – small, energy-efficient AI accelerators built into phones and new laptops (Apple Neural Engine, Qualcomm, Intel and AMD chips). They don't train models; they **run** small ones locally – face unlock, background blur in video calls, live translation, small on-device language models.
 
 IPU: https://www.graphcore.ai/ & https://www.eejournal.com/article/20170119-ipu/  
 More on CPU, GPU, TPU: https://www.youtube.com/watch?v=6ZDoFomU10A  
 
+| | CPU | GPU | TPU | NPU |
+|---|---|---|---|---|
+| Made for | Everything | Graphics, now also AI | Only neural networks | Running small AI models efficiently |
+| Where | Every computer | Gaming PCs, workstations, data centers | Google Cloud | Phones, new laptops |
+| Train big models? | No (too slow) | Yes – the default | Yes | No |
+
 # CUDA 
 
 ![](img/nvidia.jpg)   
+
+Why does almost every DL framework need an **NVIDIA** GPU? Because of **CUDA** – NVIDIA's platform (since 2007) for running general-purpose code on its GPUs. TensorFlow, PyTorch and JAX use CUDA libraries (cuBLAS for matrix maths, cuDNN for neural network layers) under the hood. Almost twenty years of software built on CUDA is a big part of why NVIDIA dominates AI hardware – competitors (AMD's ROCm, Google's TPUs, Apple's Metal) have to catch up not only in chips, but in software.
+
 CUDA intro (with GPU explanation) in 6 episodes: https://www.youtube.com/watch?v=4APkMJdiudU&list=PLC6u37oFvF40BAm7gwVP7uDdzmW83yHPe  
 CUDA package installer: https://docs.nvidia.com/cuda/cuda-installation-guide-microsoft-windows/index.html  
 CUDA install tutorial: https://www.tutorialspoint.com/cuda/cuda_installation.htm  
@@ -83,17 +157,64 @@ So how big should my rented apartment be to fit in all the cores?
 
 <img src="img/data-center.png" alt="My house as a Data Center" style="width:800px;"/>
 
-That's why:  
+A single data-center GPU costs tens of thousands of dollars, needs serious power and cooling, and you'd use it maybe a few hours a week. Training a big model needs thousands of them, connected with very fast networks. That's why:  
 
 <img src="img/cloud-computing.jpg" alt="Cloud Computing sign" style="width:900px;"/>
 
 # Cloud in general and Azure in particular
 
-Azure for students: https://azure.microsoft.com/en-us/free/students/  
+**Cloud computing** = renting computers (and services built on them) from someone else's data center, over the internet, and paying only for what you use.
+
+## Why use the cloud for Deep Learning?
+
+1. **Hardware you couldn't buy.** A GPU cluster for a few hours instead of a six-figure investment.
+2. **Elasticity.** Need 1 machine today and 50 tomorrow? Scale up, then back down to zero.
+3. **Pay per use.** Per second / per hour of compute, per GB of storage, per token of a language model.
+4. **Managed services.** Someone else installs drivers, patches servers, keeps backups – you focus on the model.
+5. **Close to the data.** Big datasets often already live in the cloud; moving terabytes to your laptop isn't an option.
+
+And the downsides you should know about:
+1. **Cost surprises.** A forgotten GPU machine runs (and bills) all weekend.
+2. **Quotas.** New accounts can rent only a little – especially GPUs (we hit this ourselves, see the hands-on below).
+3. **Data protection and regulation.** Where is the data physically stored? For personal data in the EU (GDPR) you pick EU regions – our Azure language model is deployed so that the data stays in the EU.
+4. **Lock-in.** The more provider-specific services you use, the harder it is to move.
+
+## Three levels of "someone else does it for you"
 
 ![](img/cloud-services.png)  
 
-Free options to get a GPU for your project (limits change often – check the current ones):
+| Model | You get | You manage | Deep Learning example |
+|---|---|---|---|
+| **IaaS** – Infrastructure as a Service | Virtual machines, disks, networks | Everything from the operating system up | Rent a GPU VM, install Python and CUDA yourself, run your notebook |
+| **PaaS** – Platform as a Service | A ready platform | Your code and data | **Azure Machine Learning**: managed clusters that scale to zero, experiment tracking, model deployment |
+| **SaaS** / model as a service | A finished service behind an API | Only how you use it | **Azure AI Foundry / OpenAI**: send text, get an answer from a big model; ready-made vision or speech services |
+
+The higher you go, the less work – and the less control.
+
+## The big three
+
+| | Microsoft Azure | Amazon Web Services | Google Cloud |
+|---|---|---|---|
+| ML platform | Azure Machine Learning | SageMaker | Vertex AI |
+| Big models as a service | Azure AI Foundry (OpenAI, Llama, Mistral, …) | Bedrock (Claude, Llama, …) | Vertex AI (Gemini, …) |
+| Special hardware | NVIDIA GPUs | NVIDIA GPUs, own Trainium/Inferentia chips | NVIDIA GPUs, **TPUs** |
+| Free for students | [Azure for Students](https://azure.microsoft.com/en-us/free/students/) | AWS Educate | Google Cloud credits for education |
+
+The concepts are the same everywhere – learn them once on one provider and you can find your way on the others.
+
+## How you pay
+
+1. **On-demand** – pay per hour/second, stop any time. Most flexible, most expensive.
+2. **Spot / low-priority** – unused capacity at a big discount (often 60–90%), but the provider can take the machine back at short notice. Great for training **if you save checkpoints** (remember `ModelCheckpoint` from Class 4) and can resume.
+3. **Reserved** – commit for 1–3 years, get a discount. For companies with steady workloads.
+
+Rough orders of magnitude for on-demand GPU machines (prices differ by region and change often – always check the provider's pricing calculator): a small inference GPU like the T4 costs well under a dollar per hour; an A100 a few dollars per hour; an H100 machine with 8 GPUs tens of dollars per hour.
+
+**Cost hygiene, always:** set a **budget alert**, let clusters **scale to zero**, use the smallest machine that does the job, and delete what you don't need (deleting a resource group removes everything in it).
+
+## Free options to get a GPU for your project
+
+Limits change often – check the current ones:
 
 Google Colab: https://colab.research.google.com/  
 Free tier: only ~2 CPU cores, but you can get a GPU (usually an NVIDIA T4). Switch it on in *Runtime → Change runtime type → T4 GPU*. Sessions disconnect after a few hours of use or when idle, so save your models to Google Drive.
@@ -101,9 +222,11 @@ Free tier: only ~2 CPU cores, but you can get a GPU (usually an NVIDIA T4). Swit
 Kaggle: https://www.kaggle.com/code/dansbecker/running-kaggle-kernels-with-a-gpu/notebook  
 Free tier: only a few CPU cores, but around 30 hours of GPU per week (T4 or P100). Switch it on in *Settings → Accelerator*. Needs a phone-verified account. Handy if your data is already a Kaggle dataset.
 
-More on options: https://blog.paperspace.com/gradient-kaggle-notebook-comparison/#:~:text=Kaggle%3A%20GPU%3A%20TESLA%20P100%20with%202%20CPU%20cores,with%204%20CPU%20cores%20and%2016%20GB%20RAM  
+More on options: https://blog.paperspace.com/gradient-kaggle-notebook-comparison/  
 
-Okey so now Azure!  
+## Okey so now Azure!  
+
+Azure for students: https://azure.microsoft.com/en-us/free/students/  
 
 Services for ML and DL:
 
@@ -111,9 +234,13 @@ Services for ML and DL:
 
 ![](img/databricks-logo.jpg)  
 
+**Azure Databricks** is a platform for big data processing with Apache Spark – where the data for ML often gets cleaned and prepared before training.
+
 Services using DL (how and why):
 
 ![](img/cs.jpg)
+
+Ready-made AI services (vision, speech, translation, document reading) are deep learning models trained by Microsoft that you call through an API – no training needed. Use them when your problem is a standard one ("read the text from this invoice"); train your own model when it isn't.
 
 # Hands-on: Azure Machine Learning
 
