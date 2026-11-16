@@ -176,7 +176,7 @@ A single data-center GPU costs tens of thousands of dollars, needs serious power
 And the downsides you should know about:
 1. **Cost surprises.** A forgotten GPU machine runs (and bills) all weekend.
 2. **Quotas.** New accounts can rent only a little – especially GPUs (we hit this ourselves, see the hands-on below).
-3. **Data protection and regulation.** Where is the data physically stored? For personal data in the EU (GDPR) you pick EU regions – our Azure language model is deployed so that the data stays in the EU.
+3. **Data protection and regulation.** Where is the data physically stored? For personal data in the EU (GDPR) you pick EU regions – the language model we use in Class 6 is deployed so that the data stays in the EU.
 4. **Lock-in.** The more provider-specific services you use, the harder it is to move.
 
 ## Three levels of "someone else does it for you"
@@ -187,7 +187,7 @@ And the downsides you should know about:
 |---|---|---|---|
 | **IaaS** – Infrastructure as a Service | Virtual machines, disks, networks | Everything from the operating system up | Rent a GPU VM, install Python and CUDA yourself, run your notebook |
 | **PaaS** – Platform as a Service | A ready platform | Your code and data | **Azure Machine Learning**: managed clusters that scale to zero, experiment tracking, model deployment |
-| **SaaS** / model as a service | A finished service behind an API | Only how you use it | **Azure AI Foundry / OpenAI**: send text, get an answer from a big model; ready-made vision or speech services |
+| **SaaS** / model as a service | A finished service behind an API | Only how you use it | **Azure AI Foundry / OpenAI**: send text, get an answer from a big model (we try it in Class 6); ready-made vision or speech services |
 
 The higher you go, the less work – and the less control.
 
@@ -257,7 +257,7 @@ Let's stop talking about the cloud and use it. Everything below lives in the [`c
 | **Job** | *Code + command + environment + compute*. Azure ML ships your code to the cluster, runs it, saves logs, metrics and outputs | "Run this script over there" |
 | **Experiment** | A group of related jobs, so you can compare them | A folder of runs |
 | **Data asset / MLTable** | A versioned pointer to data in the cloud | A dataset with a version number |
-| **Azure AI Foundry** | The service where you deploy and call large models (GPT, Llama, Mistral…) through an API | Class 6, as a service |
+| **Azure AI Foundry** | The service where you deploy and call large models (GPT, Llama, Mistral…) through an API – we use it in Class 6 | LLMs, as a service |
 
 What happens when you submit a job:
 
@@ -279,7 +279,8 @@ Your training script barely changes: it reads its hyperparameters from the comma
 1. **The Class 1 MNIST network as a cloud job** – [`train_mnist.py`](code/azure-ml/src/train_mnist.py) + [`job-mnist-cpu.yml`](code/azure-ml/job-mnist-cpu.yml). Watch the loss and accuracy curves appear in the studio while it trains.
 2. **A hyperparameter sweep** – [`sweep-mnist.yml`](code/azure-ml/sweep-mnist.yml) runs 12 versions of the same script with different learning rates, layer sizes, dropout and batch sizes, 4 at a time, and picks the best by validation accuracy. The experiments notebook from Class 2, automated and in parallel.
 3. **AutoML** – [`automl-housing.yml`](code/azure-ml/automl-housing.yml): give Azure ML the California housing data (prepared by [`prepare_automl_data.py`](code/azure-ml/prepare_automl_data.py)) and a metric, and it tries gradient boosting, random forests, linear models, ensembles… with automatic preprocessing, and ranks them. **Same data and same split as the Class 3 challenge** – did your network beat AutoML's mean absolute error?
-4. **A large language model as a service** – [`foundry-chat.ipynb`](code/azure-ml/foundry-chat.ipynb): call `gpt-4.1-mini` in Azure AI Foundry, see the token costs, streaming and tool calling (the agent harness from Class 6, with a big model). [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/pamelon/DeepLearning-ALK/blob/main/Classes/Class-5/code/azure-ml/foundry-chat.ipynb)
+
+And next class: a large language model as a service in **Azure AI Foundry** – we'll call `gpt-4.1-mini` from a notebook in Class 6.
 
 The commands, if you have your own Azure subscription (the [Azure for Students](https://azure.microsoft.com/en-us/free/students/) credit is enough):
 

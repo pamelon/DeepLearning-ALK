@@ -18,6 +18,10 @@ Notebooks for today (all of them run on a normal laptop CPU – the models are s
 
 They download small models from [Hugging Face](https://huggingface.co/) the first time you run them (~0.5–1 GB each), so run them once at home before class.
 
+And one notebook with a **big** model, running in the cloud:
+
+4. [LLM as a cloud service – `gpt-4.1-mini` in Azure AI Foundry: chat, token costs, temperature, streaming, tool calling](code/foundry-chat.ipynb) [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/pamelon/DeepLearning-ALK/blob/main/Classes/Class-6/code/foundry-chat.ipynb)
+
 # Where are we now?
 
 Everything we did in this course leads here. A Large Language Model is "just" what you already know: **embeddings + Transformer blocks (Class 3) + a softmax over the vocabulary (Class 2) + gradient descent (Class 1) + an enormous amount of GPU time (Class 5).**
@@ -55,6 +59,31 @@ A very short history:
 2. **Context window** – everything the model "knows" about your conversation must fit in it. Today that's from thousands to millions of tokens, but more context = slower and more expensive.
 3. **Hallucinations** – the model always produces *plausible* text, not necessarily *true* text. Give it sources (that's what **RAG**, retrieval-augmented generation, does: search first, then answer based on what was found) and check important facts.
 4. **Open-weight vs. API models** – you can download and run open-weight models (Llama, Qwen, Gemma, Mistral, DeepSeek…) on your own hardware, or call the biggest models (Claude, GPT, Gemini) through an API. Small open models (0.5–8B parameters) run on a laptop; the frontier ones need a data center.
+
+## LLMs as a cloud service: Azure AI Foundry
+
+In Class 5 we rented compute in Azure Machine Learning and trained our *own* models. For big language models you usually don't train or even host anything – you **call a model someone else runs**. That's the "model as a service" level from the IaaS/PaaS/SaaS table in Class 5.
+
+[Azure AI Foundry](https://ai.azure.com/) is Azure's service for this (the equivalents are Amazon Bedrock and Google Vertex AI). The workflow:
+
+1. **Create a Foundry resource** in a region – ours is in Sweden Central.
+2. **Deploy a model** from the catalog – we deployed `gpt-4.1-mini`. The *deployment type* decides where your data is processed: ours is **Data Zone EU**, so prompts and answers stay in the EU (GDPR, Class 5).
+3. **Set limits** – how many tokens per minute the deployment may use (ours: 50 000).
+4. **Call it** – from the *Chat playground* in the browser, or from code through an API.
+
+What you pay for is **tokens**: input tokens (your prompt, including the whole conversation so far) and output tokens (the answer), with output usually several times more expensive. An idle deployment like ours costs nothing.
+
+Compare with the laptop notebooks above:
+
+| | Small model on your laptop | Big model as a service |
+|---|---|---|
+| Quality | Weak (you saw it in the agent notebook) | Strong |
+| Cost | Your electricity | Per token |
+| Privacy | Data never leaves your computer | Data goes to the provider (choose the region!) |
+| Control | Full – you can change, fine-tune, inspect everything | Only what the API allows |
+| Setup | Download ~1 GB, needs RAM/GPU | An account and a few lines of code |
+
+In the [notebook](code/foundry-chat.ipynb) we log in with our Azure account (Entra ID, no API keys in code), send messages, look at the token usage and cost, play with temperature, stream the answer, and finally give the model a tool – **the same agent loop as in the harness notebook**, but with a model that's actually good at it.
 
 ## Is it intelligence? François Chollet's view
 
