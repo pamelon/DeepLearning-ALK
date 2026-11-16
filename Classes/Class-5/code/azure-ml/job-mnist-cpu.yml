@@ -1,0 +1,20 @@
+$schema: https://azuremlschemas.azureedge.net/latest/commandJob.schema.json
+# The MNIST network from Class 1, trained in the cloud on a CPU cluster.
+# Run with:  az ml job create -f job-mnist-cpu.yml --stream
+display_name: mnist-dense-cpu
+experiment_name: class5-mnist
+description: Class 1 MNIST network trained as an Azure ML job on CPU.
+code: ./src
+command: >-
+  python train_mnist.py
+  --epochs ${{inputs.epochs}}
+  --batch_size ${{inputs.batch_size}}
+  --learning_rate ${{inputs.learning_rate}}
+  --units ${{inputs.units}}
+inputs:
+  epochs: 5
+  batch_size: 128
+  learning_rate: 0.001
+  units: 512
+environment: azureml:keras-tf-cpu@latest
+compute: azureml:cpu-cluster

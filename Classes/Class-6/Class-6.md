@@ -12,9 +12,9 @@ Some quick terms to repeat:
 4. Keras, PyTorch, JAX
 
 Notebooks for today (all of them run on a normal laptop CPU – the models are small on purpose):
-1. [LLM basics – tokens, next-token prediction, temperature, base vs. chat model](code/llm-basics.ipynb)
-2. [VLM basics – CLIP zero-shot classification and a tiny model that answers questions about images](code/vlm-basics.ipynb)
-3. [Agent harness – build a tool-using agent loop from scratch](code/agent-harness.ipynb)
+1. [LLM basics – tokens, next-token prediction, temperature, base vs. chat model](code/llm-basics.ipynb) [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/pamelon/DeepLearning-ALK/blob/main/Classes/Class-6/code/llm-basics.ipynb)
+2. [VLM basics – CLIP zero-shot classification and a tiny model that answers questions about images](code/vlm-basics.ipynb) [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/pamelon/DeepLearning-ALK/blob/main/Classes/Class-6/code/vlm-basics.ipynb)
+3. [Agent harness – build a tool-using agent loop from scratch](code/agent-harness.ipynb) [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/pamelon/DeepLearning-ALK/blob/main/Classes/Class-6/code/agent-harness.ipynb)
 
 They download small models from [Hugging Face](https://huggingface.co/) the first time you run them (~0.5–1 GB each), so run them once at home before class.
 

@@ -176,3 +176,8 @@ Classes/*/code/ticket_classifier.png
 Classes/*/code/updated_ticket_classifier.png
 Classes/*/code/cuda-example
 Classes/*/code/cuda-example.exe
+
+# Azure ML: generated data and local run outputs
+Classes/*/code/azure-ml/data/
+Classes/*/code/azure-ml/**/outputs/
+Classes/*/code/azure-ml/**/mlruns/

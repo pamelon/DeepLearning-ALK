@@ -1,0 +1,30 @@
+$schema: https://azuremlschemas.azureedge.net/latest/autoMLJob.schema.json
+# AutoML: Azure ML tries many models (gradient boosting, random forests, linear models,
+# ensembles...) with different preprocessing, and ranks them by validation MAE.
+# Same data and split as the Class 3 challenge notebook - compare with your own network!
+# Prepare the data first:  python prepare_automl_data.py
+type: automl
+display_name: automl-california-housing
+experiment_name: class5-automl-housing
+description: AutoML regression on California housing (predict median_house_value).
+compute: azureml:cpu-cluster
+task: regression
+primary_metric: normalized_mean_absolute_error
+target_column_name: median_house_value
+training_data:
+  path: ./data/california/train
+  type: mltable
+validation_data:
+  path: ./data/california/validation
+  type: mltable
+test_data:
+  path: ./data/california/test
+  type: mltable
+limits:
+  timeout_minutes: 45
+  trial_timeout_minutes: 10
+  max_trials: 20
+  max_concurrent_trials: 4
+  enable_early_termination: true
+featurization:
+  mode: auto
