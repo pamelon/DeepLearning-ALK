@@ -236,11 +236,87 @@ Services for ML and DL:
 
 **Azure Databricks** is a platform for big data processing with Apache Spark – where the data for ML often gets cleaned and prepared before training.
 
-Services using DL (how and why):
+## The Azure AI landscape: what is for what?
 
-![](img/cs.jpg)
+Microsoft renames its AI services every couple of years, which makes it confusing. The current picture is simple, though – there are **two worlds**:
 
-Ready-made AI services (vision, speech, translation, document reading) are deep learning models trained by Microsoft that you call through an API – no training needed. Use them when your problem is a standard one ("read the text from this invoice"); train your own model when it isn't.
+1. **Azure Machine Learning** – you **build and train your own models**: your data, your code, rented compute. At the end you can publish your model as an API.
+2. **Azure AI Foundry** – you **use models someone else has already trained**: large language models (GPT, Llama, Mistral…) and ready-made **Azure AI services** for language, translation, vision, speech and documents. (Until 2023 these were called *Cognitive Services* – you'll still see that name in older tutorials and in the API addresses.)
+
+```mermaid
+flowchart TB
+    subgraph RG["Resource group = one project folder"]
+        direction TB
+        subgraph AML["Azure Machine Learning: build and train YOUR models"]
+            direction LR
+            D["Data assets"] --> J["Jobs: training, sweeps, AutoML"]
+            C["Compute clusters"] --> J
+            E["Environments"] --> J
+            J --> M["Model registry"]
+            M --> EP["Online endpoint: your model as an API"]
+        end
+        subgraph FDY["Azure AI Foundry: use models SOMEONE ELSE trained"]
+            direction LR
+            LLM["Model deployments: GPT, Llama, Mistral, ..."]
+            subgraph AIS["Azure AI services, formerly Cognitive Services"]
+                L["Language"]
+                T["Translator"]
+                V["Vision"]
+                S["Speech"]
+                DI["Document Intelligence"]
+            end
+        end
+    end
+    APP["Your app or notebook"] -->|HTTPS| EP
+    APP -->|HTTPS| LLM
+    APP -->|HTTPS| AIS
+```
+
+Everything ends the same way: **an HTTPS address that your application calls**. The difference is who trained the model behind it.
+
+| Service | What it does | Deep learning behind it | Where in the course |
+|---|---|---|---|
+| **Azure Machine Learning** | Train, track, register and deploy *your* models | Whatever you build | Today: MNIST job, sweep, AutoML, endpoint |
+| **Foundry: model deployments** | Large language (and vision-language) models behind an API | Transformers, billions of parameters | Class 6 |
+| **Language** | Sentiment, named entities, key phrases, summarization, PII detection | Transformer encoders (BERT-like) | Today, notebook |
+| **Translator** | Translation between 100+ languages | Encoder–decoder Transformers | Today, notebook |
+| **Vision** | Tags, objects, reading text (OCR), people | Convnets and Vision Transformers | Today, notebook |
+| **Speech** | Speech-to-text, text-to-speech, speech translation | Sequence models for audio | Foundry portal playground |
+| **Document Intelligence** | Reads invoices, receipts, forms into structured data | Vision + language models together | – |
+
+### Deployments vs. built-in services
+
+In Foundry there are two kinds of things, and it's easy to mix them up:
+
+1. **Built-in AI services** (Language, Translator, Vision, Speech, Document Intelligence) come **with the resource** – no deployment, you just call them. These are the "classic" Microsoft services (formerly Cognitive Services): named entity recognition, sentiment, PII detection, summarization, OCR, speech-to-text… as a service.
+2. **Models** (GPT, image generators, embeddings, open-weight models like Phi, Llama, Mistral) must first be **deployed** – you pick a model from the catalog, a deployment type (where the data is processed) and a rate limit. Deployments are pay-per-use: an idle deployment costs nothing.
+
+What our Foundry project (`dl-alk-class`) has ready for the demos:
+
+| What you want to show | Uses | Needs a deployment? | Where to try it |
+|---|---|---|---|
+| Chat, summarizing, writing | `gpt-4.1-mini`, `Phi-4-mini-instruct` | Yes | Foundry portal → Chat playground (compare the two models!) |
+| Understanding an image ("how many cats?") | `gpt-4.1-mini` (it's multimodal) | Yes | Chat playground → attach an image |
+| Generating an image from text | `gpt-image-1.5` | Yes | Images playground |
+| Speech to text / text to speech | `whisper`, `tts` – or the built-in Speech service | Yes / No | Audio / Speech playground |
+| Embeddings (meaning as vectors – Class 3!) | `text-embedding-3-small` | Yes | From code – no playground needed |
+| Sentiment, named entities, PII, summaries | Built-in **Language** service | **No** | Language playground, or the [AI services notebook](code/azure-ml/ai-services.ipynb) |
+| Translation | Built-in **Translator** | **No** | AI services notebook |
+| Tags, objects, OCR in images | Built-in **Vision** service | **No** | Vision playground, or the AI services notebook |
+
+(The portal changes often – menu names may differ slightly.)
+
+Notice the trend: tasks that used to need a dedicated service (describing an image, extracting entities, transcribing) can now also be done by one large multimodal model with a good prompt. The dedicated services are still cheaper, faster and more predictable for a single, well-defined task; the big models are more flexible.
+
+Which one do you need?
+
+```mermaid
+flowchart TD
+    Q1{"Is it a standard task?<br/>sentiment, translation, OCR,<br/>generic objects, speech"} -->|yes| A1["Ready-made Azure AI service<br/>(no training at all)"]
+    Q1 -->|no| Q2{"Can a big language model do it<br/>with a good prompt?<br/>writing, summarizing, chat, extraction"}
+    Q2 -->|yes| A2["LLM deployment in Foundry"]
+    Q2 -->|no| A3["Train your own model<br/>in Azure Machine Learning"]
+```
 
 # Hands-on: Azure Machine Learning
 
@@ -257,7 +333,9 @@ Let's stop talking about the cloud and use it. Everything below lives in the [`c
 | **Job** | *Code + command + environment + compute*. Azure ML ships your code to the cluster, runs it, saves logs, metrics and outputs | "Run this script over there" |
 | **Experiment** | A group of related jobs, so you can compare them | A folder of runs |
 | **Data asset / MLTable** | A versioned pointer to data in the cloud | A dataset with a version number |
-| **Azure AI Foundry** | The service where you deploy and call large models (GPT, Llama, Mistral…) through an API – we use it in Class 6 | LLMs, as a service |
+| **Model (registry)** | A trained model saved with a name and version | A release of your software |
+| **Online endpoint** | An HTTPS address in front of one or more *deployments* of your model, running on VMs **24/7** | Your model's shop window |
+| **Azure AI Foundry** | Ready-made models and AI services behind an API – the LLMs in Class 6, the AI services below | Models you rent, not build |
 
 What happens when you submit a job:
 
@@ -276,30 +354,73 @@ Your training script barely changes: it reads its hyperparameters from the comma
 
 ## What we run today
 
-1. **The Class 1 MNIST network as a cloud job** – [`train_mnist.py`](code/azure-ml/src/train_mnist.py) + [`job-mnist-cpu.yml`](code/azure-ml/job-mnist-cpu.yml). Watch the loss and accuracy curves appear in the studio while it trains.
+1. **The Class 1 MNIST network as a cloud job** – [`train_mnist.py`](code/azure-ml/src/train_mnist.py) + [`job-mnist-cpu.yml`](code/azure-ml/job-mnist-cpu.yml). Watch the loss and accuracy curves appear in the studio while it trains. In the studio you can also **Clone** a finished job, change one input (e.g. the learning rate) and submit it again – then select both runs and click **Compare**.
 2. **A hyperparameter sweep** – [`sweep-mnist.yml`](code/azure-ml/sweep-mnist.yml) runs 12 versions of the same script with different learning rates, layer sizes, dropout and batch sizes, 4 at a time, and picks the best by validation accuracy. The experiments notebook from Class 2, automated and in parallel.
-3. **AutoML** – [`automl-housing.yml`](code/azure-ml/automl-housing.yml): give Azure ML the California housing data (prepared by [`prepare_automl_data.py`](code/azure-ml/prepare_automl_data.py)) and a metric, and it tries gradient boosting, random forests, linear models, ensembles… with automatic preprocessing, and ranks them. **Same data and same split as the Class 3 challenge** – did your network beat AutoML's mean absolute error?
+3. **AutoML** – [`automl-housing.yml`](code/azure-ml/automl-housing.yml): give Azure ML the California housing data (prepared by [`prepare_automl_data.py`](code/azure-ml/prepare_automl_data.py), registered as data assets `california-housing-train` / `-validation` / `-test`) and a metric, and it tries gradient boosting, random forests, linear models, ensembles… with automatic preprocessing, and ranks them. **Same data and same split as the Class 3 challenge** – did your network beat AutoML's mean absolute error? (Spoiler: on tabular data, gradient boosting – here LightGBM – is very hard to beat.)
+4. **The best model as an API** – see the next section.
+5. **Ready-made AI services** – [`ai-services.ipynb`](code/azure-ml/ai-services.ipynb): sentiment, named entities and translation of Polish text, and tags, objects and OCR on images. [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/pamelon/DeepLearning-ALK/blob/main/Classes/Class-5/code/azure-ml/ai-services.ipynb)
 
 And next class: a large language model as a service in **Azure AI Foundry** – we'll call `gpt-4.1-mini` from a notebook in Class 6.
 
-The commands, if you have your own Azure subscription (the [Azure for Students](https://azure.microsoft.com/en-us/free/students/) credit is enough):
+## Your model as an API: online endpoints
 
-```bash
-az login
-az extension add --name ml
-az ml workspace create --name my-ws --resource-group my-rg --location northeurope
-az ml compute create --name cpu-cluster --type AmlCompute --size Standard_E4s_v3 --min-instances 0 --max-instances 4 --workspace-name my-ws --resource-group my-rg
-az ml environment create --file environments/keras-cpu.yml --workspace-name my-ws --resource-group my-rg
-az ml job create --file job-mnist-cpu.yml --workspace-name my-ws --resource-group my-rg --stream
+A model in a notebook helps nobody. To be useful, an application must be able to send it data and get predictions back. That's what an **online endpoint** does:
+
+```mermaid
+flowchart LR
+    A["AutoML job"] --> B["Best model<br/>LightGBM, MLflow format"]
+    B --> C["Model registry<br/>california-housing-automl v1"]
+    C --> D["Deployment 'lightgbm'<br/>1 VM, Standard_E2s_v3"]
+    D --> E["Endpoint<br/>https://.../score"]
+    F["App sends JSON:<br/>8 features of a district"] --> E
+    E --> G["Answer:<br/>predicted price"]
 ```
+
+1. **Register** the model – the best AutoML model is saved in MLflow format, so Azure ML knows how to load it and what input it expects.
+2. **Create an endpoint** ([`endpoint-housing.yml`](code/azure-ml/endpoint-housing.yml)) – the stable address and the authentication (a key).
+3. **Create a deployment** ([`deployment-housing.yml`](code/azure-ml/deployment-housing.yml)) – the model running on a VM behind the endpoint. For MLflow models Azure ML writes the scoring code and the environment for you ("no-code deployment").
+4. **Call it** – in the studio (*Endpoints → Test*) or from any program. The request is a small JSON with the 8 features ([`sample-request.json`](code/azure-ml/sample-request.json)):
+
+```python
+import os, json, requests
+
+url = os.environ["ENDPOINT_URL"]   # Endpoints → Consume → REST endpoint
+key = os.environ["ENDPOINT_KEY"]   # Endpoints → Consume → Primary key (never put it in code!)
+body = json.load(open("sample-request.json"))
+print(requests.post(url, json=body, headers={"Authorization": f"Bearer {key}"}).json())
+# e.g. [314189.97, 239000.95, 201458.06]  - true prices were 397 900, 227 900 and 172 100
+```
+
+Why an endpoint can hold **several deployments**: when you train a better model, you deploy it *next to* the old one, send it 10% of the traffic, check that nothing breaks, and then switch over – without the address ever changing (a *blue-green* or *canary* deployment).
+
+⚠️ Unlike a training cluster, **an endpoint does not scale to zero** – its VM runs and bills 24/7 until you delete it (`az ml online-endpoint delete --name <name>`).
+
+## Ready-made AI services
+
+Not every problem needs your own model. The [AI services notebook](code/azure-ml/ai-services.ipynb) calls models Microsoft has already trained, from the same Foundry resource we use for the LLM in Class 6:
+
+1. **Language** – the sentiment of Polish sentences, with opinion mining ("the lectures → positive, the coffee → negative"), named entities (people, organizations, places, dates) and key phrases.
+2. **Translator** – one call, three target languages, automatic language detection.
+3. **Vision** – tags, objects with bounding boxes, and OCR (it reads the "STOP" on a road sign).
+4. **Speech** – try it in the browser: Azure AI Foundry portal → *Playgrounds* → *Speech*.
+
+Remember the IMDB sentiment classifier we trained in Class 3 on 25 000 reviews? Here it's one HTTPS call – for a standard task. For your own, specific task you're back to training.
+
+## Set it all up again: infrastructure as code
+
+Clicking through the portal is great for learning and terrible for repeating. Everything we use today can be recreated from scratch with one script: [`setup-azure.ps1`](code/azure-ml/setup-azure.ps1) (resource group, workspace, cluster, environment, data, Foundry with the language model, all three experiments and the endpoint), and removed with [`teardown-azure.ps1`](code/azure-ml/teardown-azure.ps1). Step-by-step instructions are in the [`azure-ml` README](code/azure-ml/README.md).
+
+Describing infrastructure in files instead of clicks is called **infrastructure as code**: it's repeatable, reviewable in git, and you can rebuild everything in another region or subscription in minutes. Professional teams use dedicated tools for it (Bicep, Terraform); a script of Azure CLI commands is the simplest first step.
 
 ## Cloud lessons from setting this up
 
-1. **Quotas are real.** A new subscription can rent only a few CPU cores per region and usually **zero GPUs** – you have to request a quota increase and wait. That's why our GPU job ([`job-mnist-gpu.yml`](code/azure-ml/job-mnist-gpu.yml)) is ready but not running – compare CPU vs. GPU in Colab instead.
-2. **Scale to zero.** A cluster with `min-instances 0` costs nothing while idle. A forgotten GPU VM running over a weekend costs more than your phone bill.
+1. **Quotas are real.** A new subscription can rent only a few CPU cores per region and usually **zero GPUs** – you have to request a quota increase and wait. That's why our GPU job ([`job-mnist-gpu.yml`](code/azure-ml/job-mnist-gpu.yml)) is ready but not running – compare CPU vs. GPU in Colab instead. Quotas are **per VM family**: our first endpoint failed because another job had taken the DSv2 quota, so we moved to the ESv3 family.
+2. **Scale to zero.** A cluster with `min-instances 0` costs nothing while idle. A forgotten GPU VM running over a weekend costs more than your phone bill. Endpoints never scale to zero – delete them when you're done.
 3. **The first run is slow.** Building the environment image takes 10–15 minutes; later runs reuse it and start in a minute or two.
 4. **No keys in code.** We log in with `az login` and use roles (Entra ID) instead of pasting API keys into notebooks – keys in a public repo get stolen within minutes.
-5. **Clean up.** When the course ends: `az group delete --name <resource-group>` removes everything at once.
+5. **Some features exist only in some regions.** Image captions in the Vision service aren't available in Sweden Central, where our AI services live. Check region availability before you choose where to deploy.
+6. **Subscriptions start "empty".** Some services need their *resource provider* registered first (for endpoints: `Microsoft.Network`, `Microsoft.Cdn`, `Microsoft.PolicyInsights`). The setup script does it for you.
+7. **Clean up.** When the course ends: `az group delete --name <resource-group>` removes everything at once.
 
 # Do I have a GPU?
 

@@ -1,0 +1,10 @@
+$schema: https://azuremlschemas.azureedge.net/latest/managedOnlineDeployment.schema.json
+# The model runs on one small VM behind the endpoint. It is an MLflow model,
+# so Azure ML builds the scoring code and environment automatically ("no-code deployment").
+# IMPORTANT: unlike a training cluster, this VM runs (and bills) 24/7 until you delete the endpoint:
+#   az ml online-endpoint delete --name <endpoint-name> --yes
+name: lightgbm
+endpoint_name: california-housing
+model: azureml:california-housing-automl:1
+instance_type: Standard_E2s_v3   # 2 vCPU, 16 GB RAM; pick a VM family you have quota for
+instance_count: 1
