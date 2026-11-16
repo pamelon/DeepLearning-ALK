@@ -1,0 +1,5 @@
+$schema: https://azuremlschemas.azureedge.net/latest/environment.schema.json
+name: keras-tf-gpu
+description: Keras 3 + TensorFlow with CUDA libraries (installed by pip) + MLflow, for GPU clusters.
+image: mcr.microsoft.com/azureml/openmpi4.1.0-ubuntu22.04:latest
+conda_file: conda-gpu.yml

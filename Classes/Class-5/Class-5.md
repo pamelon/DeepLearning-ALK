@@ -115,6 +115,64 @@ Services using DL (how and why):
 
 ![](img/cs.jpg)
 
+# Hands-on: Azure Machine Learning
+
+Let's stop talking about the cloud and use it. Everything below lives in the [`code/azure-ml`](code/azure-ml) folder and runs in a real Azure subscription.
+
+## The building blocks
+
+| Thing | What it is | Analogy |
+|---|---|---|
+| **Resource group** | A folder for everything that belongs to one project – delete it, and everything inside is gone | A project folder |
+| **Azure ML workspace** | The central place for experiments, data, models and compute. Creates a storage account, a key vault and monitoring for you | Your lab |
+| **Compute cluster** | A group of virtual machines that start when a job arrives and **scale down to 0** when idle – you pay only while something runs | Rented hands, by the minute |
+| **Environment** | A Docker image + list of Python packages (Keras, TensorFlow, MLflow…) – the same on every machine | Your `requirements.txt`, frozen |
+| **Job** | *Code + command + environment + compute*. Azure ML ships your code to the cluster, runs it, saves logs, metrics and outputs | "Run this script over there" |
+| **Experiment** | A group of related jobs, so you can compare them | A folder of runs |
+| **Data asset / MLTable** | A versioned pointer to data in the cloud | A dataset with a version number |
+| **Azure AI Foundry** | The service where you deploy and call large models (GPT, Llama, Mistral…) through an API | Class 6, as a service |
+
+What happens when you submit a job:
+
+```mermaid
+flowchart LR
+    A[Your laptop: code + YAML] -->|az ml job create| B[Workspace]
+    B --> C[Build / reuse environment image]
+    C --> D[Cluster starts a VM]
+    D --> E[Run train_mnist.py]
+    E -->|metrics via MLflow| F[Studio: charts, logs]
+    E -->|outputs/| G[Saved model]
+    D -->|idle 2 min| H[Scale back to 0 VMs]
+```
+
+Your training script barely changes: it reads its hyperparameters from the command line and logs metrics with [MLflow](https://mlflow.org/) – Azure ML collects them automatically. The same script runs on your laptop too.
+
+## What we run today
+
+1. **The Class 1 MNIST network as a cloud job** – [`train_mnist.py`](code/azure-ml/src/train_mnist.py) + [`job-mnist-cpu.yml`](code/azure-ml/job-mnist-cpu.yml). Watch the loss and accuracy curves appear in the studio while it trains.
+2. **A hyperparameter sweep** – [`sweep-mnist.yml`](code/azure-ml/sweep-mnist.yml) runs 12 versions of the same script with different learning rates, layer sizes, dropout and batch sizes, 4 at a time, and picks the best by validation accuracy. The experiments notebook from Class 2, automated and in parallel.
+3. **AutoML** – [`automl-housing.yml`](code/azure-ml/automl-housing.yml): give Azure ML the California housing data (prepared by [`prepare_automl_data.py`](code/azure-ml/prepare_automl_data.py)) and a metric, and it tries gradient boosting, random forests, linear models, ensembles… with automatic preprocessing, and ranks them. **Same data and same split as the Class 3 challenge** – did your network beat AutoML's mean absolute error?
+4. **A large language model as a service** – [`foundry-chat.ipynb`](code/azure-ml/foundry-chat.ipynb): call `gpt-4.1-mini` in Azure AI Foundry, see the token costs, streaming and tool calling (the agent harness from Class 6, with a big model). [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/pamelon/DeepLearning-ALK/blob/main/Classes/Class-5/code/azure-ml/foundry-chat.ipynb)
+
+The commands, if you have your own Azure subscription (the [Azure for Students](https://azure.microsoft.com/en-us/free/students/) credit is enough):
+
+```bash
+az login
+az extension add --name ml
+az ml workspace create --name my-ws --resource-group my-rg --location northeurope
+az ml compute create --name cpu-cluster --type AmlCompute --size Standard_E4s_v3 --min-instances 0 --max-instances 4 --workspace-name my-ws --resource-group my-rg
+az ml environment create --file environments/keras-cpu.yml --workspace-name my-ws --resource-group my-rg
+az ml job create --file job-mnist-cpu.yml --workspace-name my-ws --resource-group my-rg --stream
+```
+
+## Cloud lessons from setting this up
+
+1. **Quotas are real.** A new subscription can rent only a few CPU cores per region and usually **zero GPUs** – you have to request a quota increase and wait. That's why our GPU job ([`job-mnist-gpu.yml`](code/azure-ml/job-mnist-gpu.yml)) is ready but not running – compare CPU vs. GPU in Colab instead.
+2. **Scale to zero.** A cluster with `min-instances 0` costs nothing while idle. A forgotten GPU VM running over a weekend costs more than your phone bill.
+3. **The first run is slow.** Building the environment image takes 10–15 minutes; later runs reuse it and start in a minute or two.
+4. **No keys in code.** We log in with `az login` and use roles (Entra ID) instead of pasting API keys into notebooks – keys in a public repo get stolen within minutes.
+5. **Clean up.** When the course ends: `az group delete --name <resource-group>` removes everything at once.
+
 # Do I have a GPU?
 
 You don't need to write CUDA to use a GPU in Deep Learning – TensorFlow, PyTorch and JAX do it for you. Check what they see:
@@ -253,8 +311,8 @@ import keras
 ```
 
 Notebooks for today:
-1. [JAX intro – `jax.numpy`, `grad`, `jit`, `vmap` and Keras on the JAX backend](code/jax-intro.ipynb)
-2. [PyTorch intro – the same MNIST network, written the PyTorch way](code/pytorch-intro.ipynb)
+1. [JAX intro – `jax.numpy`, `grad`, `jit`, `vmap` and Keras on the JAX backend](code/jax-intro.ipynb) [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/pamelon/DeepLearning-ALK/blob/main/Classes/Class-5/code/jax-intro.ipynb)
+2. [PyTorch intro – the same MNIST network, written the PyTorch way](code/pytorch-intro.ipynb) [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/pamelon/DeepLearning-ALK/blob/main/Classes/Class-5/code/pytorch-intro.ipynb)
 
 # Your turn
 

@@ -1,0 +1,40 @@
+$schema: https://azuremlschemas.azureedge.net/latest/sweepJob.schema.json
+# Hyperparameter sweep: Azure ML runs many trials of train_mnist.py in parallel,
+# each with different hyperparameters, and picks the best by final_val_accuracy.
+# Same idea as the experiments notebook from Class 2 - just automated and in parallel.
+type: sweep
+display_name: mnist-sweep
+experiment_name: class5-mnist-sweep
+description: Random search over learning rate, layer size, dropout and batch size.
+trial:
+  code: ./src
+  command: >-
+    python train_mnist.py
+    --epochs 5
+    --learning_rate ${{search_space.learning_rate}}
+    --units ${{search_space.units}}
+    --dropout ${{search_space.dropout}}
+    --batch_size ${{search_space.batch_size}}
+  environment: azureml:keras-tf-cpu@latest
+compute: azureml:cpu-cluster
+sampling_algorithm: random
+search_space:
+  learning_rate:
+    type: choice
+    values: [0.0001, 0.0003, 0.001, 0.003, 0.01]
+  units:
+    type: choice
+    values: [64, 128, 256, 512]
+  dropout:
+    type: choice
+    values: [0.0, 0.2, 0.4]
+  batch_size:
+    type: choice
+    values: [64, 128, 256]
+objective:
+  goal: maximize
+  primary_metric: final_val_accuracy
+limits:
+  max_total_trials: 12
+  max_concurrent_trials: 4
+  timeout: 3600

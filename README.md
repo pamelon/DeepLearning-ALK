@@ -77,7 +77,7 @@ In VS Code you can open the `.ipynb` files directly – just select the `.venv` 
 - **Class 5:** JAX runs on CPU on every system. On some Windows machines *Smart App Control* blocks its DLL (`ImportError: DLL load failed ... blocked`). If that happens to you, run the JAX notebook in [Google Colab](https://colab.research.google.com/) – JAX is preinstalled there and you also get a free GPU/TPU.
 - **Class 6:** the notebooks download small models from Hugging Face the first time you run them (GPT-2, Qwen2.5-0.5B, CLIP, SmolVLM – about 3 GB together, then cached on your disk). Run them once at home, not on the university Wi-Fi five minutes before class.
 
-**No laptop that can handle it?** Every notebook also runs in [Google Colab](https://colab.research.google.com/) or [Kaggle Notebooks](https://www.kaggle.com/code) – most packages are preinstalled; install the missing ones with `!pip install <package>` in the first cell.
+**No laptop that can handle it?** Every notebook also runs in [Google Colab](https://colab.research.google.com/) or [Kaggle Notebooks](https://www.kaggle.com/code) – most packages are preinstalled; install the missing ones with `!pip install <package>` in the first cell. Click an **Open in Colab** badge next to a notebook, or open any notebook directly by replacing `https://github.com/` in its address with `https://colab.research.google.com/github/`.
 
 ## Grading 
 

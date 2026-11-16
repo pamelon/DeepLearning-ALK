@@ -1,0 +1,20 @@
+$schema: https://azuremlschemas.azureedge.net/latest/commandJob.schema.json
+# Exactly the same training as job-mnist-cpu.yml - only the environment and the compute differ.
+# Compare "train_seconds" of both jobs in the Azure ML studio.
+display_name: mnist-dense-gpu
+experiment_name: class5-mnist
+description: Class 1 MNIST network trained as an Azure ML job on GPU.
+code: ./src
+command: >-
+  python train_mnist.py
+  --epochs ${{inputs.epochs}}
+  --batch_size ${{inputs.batch_size}}
+  --learning_rate ${{inputs.learning_rate}}
+  --units ${{inputs.units}}
+inputs:
+  epochs: 5
+  batch_size: 128
+  learning_rate: 0.001
+  units: 512
+environment: azureml:keras-tf-gpu@latest
+compute: azureml:gpu-cluster

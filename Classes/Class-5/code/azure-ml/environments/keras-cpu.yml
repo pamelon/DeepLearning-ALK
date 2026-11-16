@@ -1,0 +1,5 @@
+$schema: https://azuremlschemas.azureedge.net/latest/environment.schema.json
+name: keras-tf-cpu
+description: Keras 3 + TensorFlow (CPU) + MLflow for the course jobs.
+image: mcr.microsoft.com/azureml/openmpi4.1.0-ubuntu22.04:latest
+conda_file: conda-cpu.yml

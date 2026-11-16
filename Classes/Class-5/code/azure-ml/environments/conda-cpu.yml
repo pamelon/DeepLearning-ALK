@@ -1,0 +1,11 @@
+name: keras-tf-cpu
+channels:
+  - conda-forge
+dependencies:
+  - python=3.11
+  - pip
+  - pip:
+      - tensorflow-cpu>=2.16
+      - keras>=3
+      - mlflow
+      - azureml-mlflow
