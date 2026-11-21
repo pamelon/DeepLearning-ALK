@@ -22,6 +22,7 @@
     .\setup-azure.ps1 -ResourceGroup DL_ALK_RH
     .\setup-azure.ps1 -ResourceGroup DL_ALK_RH -SkipEndpoint            # no 24/7 costs
     .\setup-azure.ps1 -ResourceGroup DL_ALK_RH -DryRun                   # only print the commands
+    .\setup-azure.ps1 -ResourceGroup DL_ALK_RH -FoundryOnly              # Class 6: only Foundry + AI services
 #>
 param(
     [Parameter(Mandatory = $true)] [string] $ResourceGroup,
@@ -36,10 +37,12 @@ param(
     [switch] $SkipFoundry,
     [switch] $SkipExperiments,
     [switch] $SkipEndpoint,
+    [switch] $FoundryOnly,                       # only the Foundry resource, project and deployments (no Azure ML)
     [switch] $DryRun
 )
 
 $ErrorActionPreference = "Stop"
+if ($FoundryOnly) { $SkipExperiments = $true; $SkipEndpoint = $true; $SkipFoundry = $false }
 Set-Location $PSScriptRoot
 
 # The Azure CLI (az) must be installed and logged in. If your antivirus inspects HTTPS
@@ -57,6 +60,17 @@ function Az {
     $out = & $az @args --only-show-errors
     if ($LASTEXITCODE -ne 0) { throw "az command failed (exit code $LASTEXITCODE)" }
     return $out
+}
+
+function Try-Az {
+    # For "does it exist?" checks: returns the output, or $null if az fails. Never stops the script.
+    # (PowerShell 5.1 turns a native command's error output into a terminating error when
+    #  $ErrorActionPreference is "Stop", even with 2>$null - so we relax it here.)
+    $old = $ErrorActionPreference; $ErrorActionPreference = "Continue"
+    try {
+        $out = & $az @args --only-show-errors 2>$null
+        if ($LASTEXITCODE -eq 0) { return $out } else { return $null }
+    } finally { $ErrorActionPreference = $old }
 }
 
 function Suffix { -join ((97..122) | Get-Random -Count 4 | ForEach-Object { [char]$_ }) }
@@ -80,6 +94,7 @@ foreach ($p in "Microsoft.MachineLearningServices", "Microsoft.CognitiveServices
 Step "2. Resource group $ResourceGroup ($Location)"
 Az group create --name $ResourceGroup --location $Location --query "properties.provisioningState" -o tsv
 
+if (-not $FoundryOnly) {
 Step "3. Azure ML workspace $Workspace"
 Az ml workspace create --name $Workspace --resource-group $ResourceGroup --location $Location `
     --display-name "Deep Learning ALK" --query name -o tsv
@@ -99,12 +114,13 @@ if (-not (Test-Path "data/california/train/MLTable")) {
     if (-not $DryRun) { & $python prepare_automl_data.py; if ($LASTEXITCODE -ne 0) { throw "data preparation failed" } }
 }
 foreach ($split in "train", "validation", "test") {
-    $exists = if ($DryRun) { $null } else { & $az ml data show --name "california-housing-$split" --version 1 @ws --query name -o tsv --only-show-errors 2>$null }
+    $exists = if ($DryRun) { $null } else { Try-Az ml data show --name "california-housing-$split" --version 1 @ws --query name -o tsv }
     if (-not $exists) {
         Az ml data create --name "california-housing-$split" --version 1 --type mltable `
             --path "./data/california/$split" --description "California housing - $split split" @ws --query name -o tsv
     } else { Write-Host "data asset california-housing-$split already exists" }
 }
+}   # end of Azure ML part (skipped with -FoundryOnly)
 
 if (-not $SkipFoundry) {
     if (-not $FoundryName) {
@@ -113,14 +129,14 @@ if (-not $SkipFoundry) {
         $FoundryName = if ($existing) { $existing } else { "dl-alk-foundry-" + (Suffix) }
     }
     Step "7. Azure AI Foundry $FoundryName ($FoundryLocation) + project + model deployments + roles"
-    $found = if ($DryRun) { $null } else { & $az cognitiveservices account show -n $FoundryName -g $ResourceGroup --query name -o tsv --only-show-errors 2>$null }
+    $found = if ($DryRun) { $null } else { Try-Az cognitiveservices account show -n $FoundryName -g $ResourceGroup --query name -o tsv }
     if (-not $found) {
         Az cognitiveservices account create --name $FoundryName --resource-group $ResourceGroup `
             --location $FoundryLocation --kind AIServices --sku S0 --custom-domain $FoundryName --yes `
             --query "properties.endpoint" -o tsv
     }
     # A Foundry *project* is what the Foundry portal (ai.azure.com) works with: playgrounds, agents, evaluations.
-    $proj = if ($DryRun) { $null } else { & $az cognitiveservices account project show --name $FoundryName -g $ResourceGroup --project-name dl-alk-class --query name -o tsv --only-show-errors 2>$null }
+    $proj = if ($DryRun) { $null } else { Try-Az cognitiveservices account project show --name $FoundryName -g $ResourceGroup --project-name dl-alk-class --query name -o tsv }
     if (-not $proj) {
         Az cognitiveservices account project create --name $FoundryName --resource-group $ResourceGroup `
             --project-name dl-alk-class --location $FoundryLocation --display-name "Deep Learning ALK - class demos" `
@@ -138,7 +154,7 @@ if (-not $SkipFoundry) {
         @{ n = "Phi-4-mini-instruct";    v = "1";          f = "Microsoft"; s = "GlobalStandard";   c = 1 }    # small open-weight model
     )
     foreach ($m in $models) {
-        $dep = if ($DryRun) { $null } else { & $az cognitiveservices account deployment show -g $ResourceGroup -n $FoundryName --deployment-name $m.n --query name -o tsv --only-show-errors 2>$null }
+        $dep = if ($DryRun) { $null } else { Try-Az cognitiveservices account deployment show -g $ResourceGroup -n $FoundryName --deployment-name $m.n --query name -o tsv }
         if (-not $dep) {
             Az cognitiveservices account deployment create --resource-group $ResourceGroup --name $FoundryName `
                 --deployment-name $m.n --model-name $m.n --model-version $m.v --model-format $m.f `
@@ -149,8 +165,8 @@ if (-not $SkipFoundry) {
         $me = & $az ad signed-in-user show --query id -o tsv --only-show-errors
         $scope = & $az cognitiveservices account show -n $FoundryName -g $ResourceGroup --query id -o tsv --only-show-errors
         foreach ($role in "Cognitive Services OpenAI User", "Cognitive Services User") {
-            & $az role assignment create --assignee-object-id $me --assignee-principal-type User --role $role `
-                --scope $scope --only-show-errors -o none 2>$null
+            Try-Az role assignment create --assignee-object-id $me --assignee-principal-type User --role $role `
+                --scope $scope -o none | Out-Null
         }
     }
 }
@@ -181,7 +197,7 @@ if (-not $SkipEndpoint) {
         $best = & $az ml job show -n $automl @ws --query "tags.automl_best_child_run_id" -o tsv --only-show-errors
     } else { $best = "<best-child-run>" }
 
-    $versions = if ($DryRun) { @() } else { & $az ml model list --name california-housing-automl @ws --query "[].version" -o tsv --only-show-errors 2>$null }
+    $versions = if ($DryRun) { @() } else { Try-Az ml model list --name california-housing-automl @ws --query "[].version" -o tsv }
     $version = [string](([int](($versions | ForEach-Object { [int]$_ } | Measure-Object -Maximum).Maximum)) + 1)
     Az ml model create --name california-housing-automl --version $version --type mlflow_model `
         --path "azureml://jobs/$best/outputs/artifacts/outputs/mlflow-model" @ws --query "{name:name, version:version}" -o tsv
@@ -195,6 +211,7 @@ if (-not $SkipEndpoint) {
 }
 
 Step "Done"
-Write-Host "Studio:  https://ml.azure.com  (workspace $Workspace)"
+if (-not $FoundryOnly) { Write-Host "Studio:  https://ml.azure.com  (workspace $Workspace)" }
+if (-not $SkipFoundry) { Write-Host "Foundry portal: https://ai.azure.com  (project dl-alk-class)" }
 if (-not $SkipFoundry) { Write-Host "Foundry endpoint for the notebooks:  https://$FoundryName.cognitiveservices.azure.com/" }
 if (-not $SkipEndpoint) { Write-Host "API endpoint: $EndpointName  - delete it when you're done: .\teardown-azure.ps1 -ResourceGroup $ResourceGroup -EndpointsOnly" }

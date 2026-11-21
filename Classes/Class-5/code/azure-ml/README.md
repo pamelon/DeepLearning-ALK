@@ -64,6 +64,7 @@ From this folder:
 cd Classes\Class-5\code\azure-ml
 .\setup-azure.ps1 -ResourceGroup DL_ALK_RH                 # everything, ~1 hour (AutoML is the slow part)
 .\setup-azure.ps1 -ResourceGroup DL_ALK_RH -SkipEndpoint   # everything except the 24/7 API
+.\setup-azure.ps1 -ResourceGroup DL_ALK_RH -FoundryOnly    # Class 6: only Foundry + AI services, ~5 min
 .\setup-azure.ps1 -ResourceGroup DL_ALK_RH -DryRun         # just print the commands
 ```
 

@@ -38,6 +38,30 @@ A very short history:
 | 2024 | Reasoning models (OpenAI o1, later DeepSeek-R1 and others) | The model "thinks" in long hidden chains of thought before answering |
 | 2025– | Agents | Models that use tools, write and run code, and work on tasks for many steps |
 
+## What's inside a GPT?
+
+A GPT-style model is the **decoder half of the Transformer** from Class 3, stacked many times:
+
+<img src="img/gpt-architecture.png" alt="GPT architecture: input embedding + positional encoding, a stack of Transformer blocks, then a linear layer and softmax" width="200"/>
+
+<sub>Image: Marxav, [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/), via [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Gpt-main.png)</sub>
+
+Read it from the bottom:
+1. **Input embedding + positional encoding** – every token becomes a vector, plus information about its position (Class 3).
+2. **Transformer blocks** – self-attention + feed-forward, repeated tens of times (GPT-3: 96 blocks). The attention is **masked**: every token can look only at the tokens *before* it, never at the future.
+3. **Linear + softmax** – a probability for **every token in the vocabulary** to come next. That's multi-class classification with ~100 000 classes (Class 2).
+
+Generating text is just this classifier in a loop:
+
+```mermaid
+flowchart LR
+    A["The capital of France is"] --> M["GPT"]
+    M --> P["probabilities:<br/>Paris 0.62, the 0.08, a 0.05 ..."]
+    P --> S["pick one token<br/>(temperature!)"]
+    S --> N["The capital of France is Paris"]
+    N -->|"append and repeat"| M
+```
+
 ## How an LLM is made
 
 1. **Pretraining** – predict the next token on trillions of tokens of text (web, books, code). This is where the model learns language, facts and patterns. It costs months of time on thousands of GPUs. The result is a **base model**: a brilliant autocomplete that doesn't follow instructions.
@@ -46,6 +70,18 @@ A very short history:
    - **Reinforcement learning from human (or AI) feedback** – people (or another model) rank answers, the model learns to prefer the better ones,
    - **Reinforcement learning on verifiable tasks** – math and code where the answer can be checked automatically. This is what produces **reasoning models**.
 3. **Inference** – generating text one token at a time. Each new token is sampled from the predicted distribution: **temperature** controls how adventurous that sampling is (we play with it in the notebook).
+
+The three training stages as one picture – pretraining gives a *base model*, supervised fine-tuning an *instruction-following* model, and RLHF an *aligned assistant*:
+
+<img src="img/llm-training-stages.png" alt="Three-stage LLM training: pretraining, supervised fine-tuning, RLHF" width="420"/>
+
+<sub>Image: Kjerish, [CC0](https://creativecommons.org/publicdomain/zero/1.0/), via [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Three-stage_large_language_model_training_workflow.svg)</sub>
+
+RLHF in more detail: people compare pairs of answers, a separate **reward model** learns to predict which answer people prefer, and the language model is then trained (with reinforcement learning) to produce answers the reward model scores highly:
+
+<img src="img/rlhf.png" alt="RLHF: prompt data trains a supervised model; human annotators rank its responses; the rankings train a reward model; the reward model guides the training of the aligned model" width="520"/>
+
+<sub>Image: PopoDameron, [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/), via [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:RLHF_diagram.svg)</sub>
 
 | Model type | Trained for | Example behaviour for "The capital of France is" |
 |---|---|---|
@@ -58,6 +94,12 @@ A very short history:
 1. **Tokens, not words.** Models see subword tokens (Class 3). Price, speed and context limits are all counted in tokens. That's also why LLMs famously struggle to count letters in a word – they never see the letters.
 2. **Context window** – everything the model "knows" about your conversation must fit in it. Today that's from thousands to millions of tokens, but more context = slower and more expensive.
 3. **Hallucinations** – the model always produces *plausible* text, not necessarily *true* text. Give it sources (that's what **RAG**, retrieval-augmented generation, does: search first, then answer based on what was found) and check important facts.
+
+   How RAG works: your documents are turned into **embeddings** (Class 3!) and stored in a vector database. For each question, the most similar chunks are found and pasted into the prompt, and the model answers *based on them*:
+
+   <img src="img/rag.png" alt="RAG: documents are embedded into a vector database; the user query is embedded, relevant chunks are retrieved and added to the prompt; the LLM generates the response" width="480"/>
+
+   <sub>Image: Turtlecrown, [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/), via [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:RAG_diagram.svg)</sub>
 4. **Open-weight vs. API models** – you can download and run open-weight models (Llama, Qwen, Gemma, Mistral, DeepSeek…) on your own hardware, or call the biggest models (Claude, GPT, Gemini) through an API. Small open models (0.5–8B parameters) run on a laptop; the frontier ones need a data center.
 
 ## LLMs as a cloud service: Azure AI Foundry
@@ -95,17 +137,6 @@ Besides `gpt-4.1-mini`, our Foundry project has a few more models deployed, so y
 
 In the [notebook](code/foundry-chat.ipynb) we log in with our Azure account (Entra ID, no API keys in code), send messages, look at the token usage and cost, play with temperature, stream the answer, and finally give the model a tool – **the same agent loop as in the harness notebook**, but with a model that's actually good at it.
 
-## Is it intelligence? François Chollet's view
-
-François Chollet (the author of Keras and of our book) has a sharp take worth knowing. In ["On the Measure of Intelligence"](https://arxiv.org/abs/1911.01547) he separates two things:
-
-1. **Skill** – being good at tasks you've seen many times before. LLMs have enormous skill, because they've seen almost the whole internet.
-2. **Intelligence** – how efficiently you learn something **genuinely new** from very few examples.
-
-To measure the second one he created [ARC-AGI](https://arcprize.org/arc-agi): small visual puzzles that are easy for people, but that you can't solve by memorizing. For years LLMs scored close to zero; reasoning models made big jumps, but at a huge compute cost per puzzle, and each new version of the benchmark reset the scores again. His point: scaling up memorization is not the same as the ability to adapt – and that's an open research question, not a solved one.
-
-Remember the Omniglot challenge from Class 4? Same question, different decade.
-
 # Vision-Language Models (VLMs)
 
 > Naming: you'll see "VLM", "VLLM", "multimodal LLM" or "LMM" – all meaning the same idea: a language model that can also see. (Careful: **vLLM** is something else – a popular open-source *engine* for serving LLMs fast.)
@@ -115,6 +146,10 @@ Remember the Omniglot challenge from Class 4? Same question, different decade.
 [CLIP (OpenAI, 2021)](https://openai.com/index/clip/) trains two encoders together: one for images (a vision Transformer or a convnet like in Class 4), one for text. They're trained on 400 million image–caption pairs from the internet with one simple goal: **the embedding of a picture and the embedding of its caption should be close; embeddings of non-matching pairs should be far apart** (this is called *contrastive learning*).
 
 The result is a shared "meaning space" for images and text. That gives you **zero-shot classification** for free: to classify an image, compare it with the texts "a photo of a cat", "a photo of a dog", "a photo of a car" – and pick the closest. No training on your classes at all. We do exactly this in the notebook.
+
+![CLIP: contrastive pre-training of an image encoder and a text encoder; building a classifier from label texts; zero-shot prediction](img/clip.png)
+
+<sub>(1) Training: in a batch of N images and N captions, the matching pairs (the diagonal) should get high similarity, all others low. (2)–(3) Zero-shot classification: turn class names into sentences, encode them, and pick the one closest to the image. Image: OpenAI, [MIT License](https://github.com/openai/CLIP/blob/main/LICENSE), via [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Contrastive_Language-Image_Pretraining.png)</sub>
 
 ## Step 2: give the image to an LLM
 
@@ -127,6 +162,13 @@ text  ────────────────────────�
 ```
 
 1. The **vision encoder** cuts the image into patches and turns them into embeddings (like a convnet's feature maps, but with a Transformer).
+
+   This is the **Vision Transformer (ViT)** from Class 4 – the image becomes a sequence of patch "tokens":
+
+   <img src="img/vision-transformer.png" alt="Vision Transformer: the image is cut into patches, each patch becomes an embedding, positional encoding is added and the sequence goes through a Transformer encoder" width="520"/>
+
+   <sub>Image: Daniel Voigt Godoy, [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/), via [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Vision_Transformer.png)</sub>
+
 2. The **projector** translates those embeddings into the "language" of the LLM's embedding space.
 3. The **LLM** sees the image tokens as if they were words at the start of the prompt – and attention (Class 3!) lets every text token look at every image patch.
 
@@ -138,11 +180,22 @@ Examples: GPT-4o and newer, Claude, Gemini (closed); Qwen-VL, Gemma, PaliGemma, 
 
 ## And image generation?
 
+<img src="img/diffusion.png" alt="Diffusion: a denoising model turns pure noise step by step into an image; different noise gives different variations" width="520"/>
+
+<sub>Image: MrAlanKoh, [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/), via [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Example_of_Denoising_Diffusion_models.png)</sub>
+
+
 The other direction – text to image – mostly uses **diffusion models**: start from pure noise and let a network remove a little bit of noise at a time, guided by a text embedding (often from a CLIP-like text encoder), until an image appears. Chollet covers this step by step in the book; it needs a GPU to be fun, so try it in Colab with the [book's notebooks](https://github.com/fchollet/deep-learning-with-python-notebooks).
 
 # Agents
 
 An **agent** is a model that doesn't just answer once, but **works in a loop**: it decides what to do, uses a tool, looks at the result, and decides again – until the task is done.
+
+<img src="img/genai-agent.png" alt="A GenAI agent: the LLM in the middle, with pre- and post-processing that connect it to data, tools and other models" width="420"/>
+
+<sub>Image: Marxav, [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/), via [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:GenAI_Agent.png)</sub>
+
+The LLM is only the middle box. Everything around it – preparing the prompt, connecting data, tools and other models, checking and acting on the output – is the **harness**:
 
 ```
           ┌─────────────────────────────────────────────┐
